@@ -1,0 +1,277 @@
+\documentclass[a4paper,12pt]{extreport}
+ 
+\usepackage{extsizes}
+\usepackage{cmap} % для кодировки шрифтов в pdf
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[usenames, dvipsnames]{color}
+\definecolor{fontColor}{RGB}{169, 183, 198}
+\definecolor{pageColor}{RGB}{43, 43, 43}
+
+\usepackage{mathtools}
+
+\makeatletter
+\let\mytagform@=\tagform@
+\def\tagform@#1{\maketag@@@{\color{fontColor}(#1)}}
+\makeatother
+
+\renewcommand\theequation{{\color{fontColor}\arabic{equation}}}
+
+
+  
+\usepackage{graphicx} % для вставки картинок
+\graphicspath{{images/}}
+\usepackage{amssymb,amsfonts,amsmath,amsthm} % математические дополнения от АМС
+\usepackage{mathtext}
+\usepackage{cite}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage[pdftex,unicode,colorlinks = true,linkcolor = white]{hyperref}
+\usepackage{indentfirst} % отделять первую строку раздела абзацным отступом тоже
+\usepackage{placeins}
+\bibliographystyle{unsrt}
+\usepackage{makecell}
+\usepackage{multirow} % улучшенное форматирование таблиц
+\usepackage{ulem} % подчеркивания
+\usepackage{longtable} 
+\usepackage{multirow}
+\usepackage{multicol}
+ 
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyheadoffset{0mm}
+\fancyfootoffset{0mm}
+\setlength{\headheight}{17pt}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{ 
+    \fancyhf{}
+    \rhead{\thepage}}
+    
+\usepackage{geometry}
+\geometry{left=1.5cm}
+\geometry{right=1.5cm}
+\geometry{top=2.4cm}
+\geometry{bottom=2.4cm}
+
+\author{Aleksandr Zhuravljov}
+\title{Numerical model of steady state and transient flow}
+\date{\today}
+
+
+\usepackage {titlesec}
+\titleformat{\chapter}{\thispagestyle{myheadings}\centering\hyphenpenalty=10000\normalfont\huge\bfseries}{
+\thechapter. }{0pt}{\Huge}
+\makeatother
+
+
+\usepackage{nomencl}
+\makenomenclature    % Закомментируйте, если перечень не нужен
+%"/usr/texbin/makeindex" %.nlo -s nomencl.ist -o %.nls
+\renewcommand{\nomname}{Перечень условных обозначений}
+\renewcommand{\nompreamble}{\markboth{}{}}
+\newcommand*{\nom}[2]{#1~- #2\nomenclature{#1}{#2}}
+
+\setlength{\columnseprule}{0.4pt}
+\setlength{\columnsep}{50pt}
+\def\columnseprulecolor{\color{fontColor}}
+
+
+\begin{document}
+
+\pagecolor{pageColor}
+\color{fontColor}
+%\maketitle
+%\newpage
+%\tableofcontents{\thispagestyle{empty}}
+%\newpage
+
+\begin{multicols}{2}
+\begin{center}
+{\large \textbf{FVM Steady State}}
+\end{center}
+%
+\begin{eqnarray}
+\label{eq:poisson_integral}
+\oint \limits_{\Omega} \rho \frac{k}{\mu} \vec{\nabla}P d\vec{\Omega} = 0,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_integral_bound}
+P \Big|_\Gamma = P_\Gamma,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_integral_num}
+\delta_{+} - \delta_{-} = 0,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:delta}
+\delta^{m} = -\overline{\lambda} \nabla^{m}_{P}\Delta \Omega,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:lambda}
+\lambda = \rho \frac{k}{\mu},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:nabla_P_num}
+\nabla^{m}_{P} = \frac{P^{m}_{+} - P^{m}_{-}}{\Delta L},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:Consumption_poisson_integral}
+G = \delta_{N-1}.
+\end{eqnarray}
+
+\columnbreak
+\begin{center}
+{\large \textbf{FVM Transient flow}}
+\end{center}
+%
+\begin{eqnarray}
+\label{eq:conductivity_integral}
+\int \limits_{V} \left( \phi \rho^\prime + \phi^\prime \rho \right) \frac{\partial P}{\partial t} d V = \oint \limits_{\Omega} \rho \frac{k}{\mu} \vec{\nabla}P d\vec{\Omega},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:conductivity_bound}
+P\left(t\right) \Big|_\Gamma = P_\Gamma\left(t\right),
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:conductivity_num}
+\alpha \Delta^{t}_{P} + \delta_{+}^{n+1} - \delta_{-}^{n+1} = 0,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:delta_P_t_num}
+\Delta^{t}_{P} = P^{n+1} - P^{n},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:alpha}
+\alpha = \left( \phi \rho^\prime + \phi^\prime \rho \right) \frac{\Delta V}{\Delta t},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:Consumption_conductivity_integral}
+G^n = \delta_{N-1}^{n}.
+\end{eqnarray}
+\end{multicols}
+
+\vspace{1.cm}
+
+\begin{multicols}{2}
+\begin{center}
+{\large \textbf{Analytical Steady State}}
+\end{center}
+
+\begin{eqnarray}
+\label{eq:poisson_diff}
+\frac{d}{dx}\rho\frac{k}{\mu} \frac{dP}{dx} = 0,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_diff_bound}
+P\left(0\right) = P_{in}, \; P\left(L\right) = P_{out},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:consumption_poisson_diff_geniral}
+G = - \frac{1}{L} \int \limits_{P_{in}}^{P_{out}} \rho\frac{k}{\mu} dP,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_dencity_particular}
+\rho = a_{\rho}P + b_{\rho},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_permeability_particular}
+k = \theta_{3}P^3 + \theta_{2}P^2 + \theta_{1}P + \theta_{0},
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:poisson_rho_k_mu__particular}
+\begin{gathered}
+\rho k =  a_{\rho}\theta_{3}P^4 + \left( a_{\rho}\theta_{2} + b_{\rho}\theta_{3}\right)P^3 +\\
++ \left(a_{\rho}\theta_{1} + b_{\rho}\theta_{2}\right)P^2 +
+    \left(a_{\rho}\theta_{0} + b_{\rho}\theta_{1}\right)P + b_{\rho}\theta_{0},
+\end{gathered}
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:consumption_poisson_diff_particular}
+\begin{gathered}
+G = \frac{a_{\rho}\theta_{3}}{5L\mu} \left(P_{in}^5 -P_{out}^5 \right) +\\
++\frac{a_{\rho}\theta_{2} + b_{\rho}\theta_{3}}{4L\mu} \left(P_{in}^4 -P_{out}^4 \right) +\\
++\frac{a_{\rho}\theta_{1} + b_{\rho}\theta_{2}}{3L\mu} \left(P_{in}^3 -P_{out}^3 \right) +\\
++\frac{a_{\rho}\theta_{0} + b_{\rho}\theta_{1}}{2L\mu} \left(P_{in}^2 -P_{out}^2 \right) +
+  \frac{b_{\rho}\theta_{0}}{L\mu} \left(P_{in} -P_{out} \right).
+\end{gathered}
+\end{eqnarray}
+
+\columnbreak
+
+\begin{center}
+{\large \textbf{Inverse Problem}}
+\end{center}
+%
+\begin{eqnarray}
+\label{eq:functional}
+F\left(f\left(P\right)\right) =\sum_{j=1}^M \left(G^j\left(f\left(P\right)\right) - \tilde{G}^j\right)^2,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:functional_parameters}
+F\left(\theta\right) =\sum_{j=1}^M \left(G^j\left(\theta\right) - \tilde{G}^j\right)^2,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:minimization_functional_parameters}
+f(P) = \arg  \min_{\theta}  F.
+\end{eqnarray}
+
+\end{multicols}
+
+\begin{center}
+{\large \textbf{Steady State Analytical Inverse Problem}}
+\end{center}
+%
+\begin{eqnarray}
+\label{eq:consumption_poisson_diff_particular_d}
+    \begin{matrix}
+   G = \sum \limits_{i=0}^{3} \frac{\partial G}{\partial \theta_i}\theta_i, \;
+   \frac{\partial G}{\partial \theta_{i}}& =
+    & \left\{
+    \begin{matrix}
+    \frac{a_{\rho}}{\left(i+2\right) L\mu} \left(P_{in}^{i+2} -P_{out}^{i+2} \right)+
+    \frac{b_{\rho}}{\left(i+1\right)L\mu} \left(P_{in}^{i+1} -P_{out}^{i+1} \right) & : i > 0, \\
+    \frac{b_{\rho}}{\left(i+1\right)L\mu} \left(P_{in}^{i+1} -P_{out}^{i+1} \right) & : i = 0,
+    \end{matrix} \right.
+    \end{matrix}
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:least_squares_analytical_1}
+\sum_{j=1}^M \left(\sum_{n=0}^{3} \frac{\partial G^j}{\partial \theta_n}\theta_n - \tilde{G}^j\right)\frac{\partial G^j}{\partial \theta_i} = 0,
+\end{eqnarray}
+%
+\begin{eqnarray}
+\label{eq:least_squares_analytical_2}
+\sum_{j=1}^M \frac{\partial G^j}{\partial \theta_i} \sum_{n=0}^{3} \frac{\partial G^j}{\partial \theta_n}\theta_n =\sum_{j=1}^M \frac{\partial G^j}{\partial \theta_i} \tilde{G}^j.
+\end{eqnarray}
+
+
+
+
+
+\end{document}
