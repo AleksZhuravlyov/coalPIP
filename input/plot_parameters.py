@@ -4,14 +4,18 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '.'))
+sys.path.append(os.path.join(current_path, '../'))
+
+from input.config import Config
 
 
-def plot_parameters(csv_parameters, y_min=None, y_max=None, y2_min=None,
+def plot_parameters(settings_file, y_min=None, y_max=None, y2_min=None,
                     y2_max=None):
-    parameters = pd.read_csv(csv_parameters, index_col='time', parse_dates=True)
+    settings = Config()
+    settings.parse(file_name=settings_file)
+    parameters = pd.read_csv(settings.parameters_file, index_col='time',
+                             parse_dates=True)
     time_series = pd.Series(parameters.index - parameters.index[0])
     parameters.index = time_series.dt.total_seconds()
     parameters.index.name = 'time, s'
@@ -45,18 +49,16 @@ def plot_parameters(csv_parameters, y_min=None, y_max=None, y2_min=None,
 
 if __name__ == '__main__':
 
-    # csv_file = '../labdata/2_parameters.csv'
-    # csv_file = '../labdata/3_parameters.csv'
-    csv_file = '../labdata/1_parameters.csv'
+    ini_file = '../settings/settings.ini'
     
     if len(sys.argv) == 6:
-        plot_parameters(csv_parameters=sys.argv[1], y_min=sys.argv[2],
+        plot_parameters(settings_file=sys.argv[1], y_min=sys.argv[2],
                         y_max=sys.argv[3], y2_min=sys.argv[4],
                         y2_max=sys.argv[5])
     elif len(sys.argv) == 4:
-        plot_parameters(csv_parameters=sys.argv[1], y_min=sys.argv[2],
+        plot_parameters(settings_file=sys.argv[1], y_min=sys.argv[2],
                         y_max=sys.argv[3])
     elif len(sys.argv) == 2:
-        plot_parameters(csv_parameters=sys.argv[1])
+        plot_parameters(settings_file=sys.argv[1])
     else:
-        plot_parameters(csv_parameters=csv_file)
+        plot_parameters(settings_file=ini_file)
