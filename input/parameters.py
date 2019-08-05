@@ -1,7 +1,6 @@
 import sys
 import os
 
-import matplotlib.pyplot as plt
 import pandas as pd
 
 current_path = os.path.dirname(os.path.abspath(__file__))
@@ -11,16 +10,12 @@ from input.config import Config
 from input.plot_parameters import plot_parameters
 
 
-class Parameters:
-    def __init__(self, config_file):
+class ParametersFrame:
+    def __init__(self):
         self.__origin = None
         self.__entire = None
         self.__steady = None
         self.__transient = None
-
-        self.config = Config(file_name=config_file)
-
-    # Accessors and mutators for particular parameters types.
 
     @property
     def origin(self):
@@ -54,26 +49,35 @@ class Parameters:
     def transient(self, transient):
         self.__transient = pd.DataFrame(transient)
 
+
+class Parameters(ParametersFrame):
+    def __init__(self, config_file):
+        super().__init__()
+        self.__config = Config(file_name=config_file)
+
     # Process particular parameters types.
 
     def process_origin(self):
-        self.origin = pd.read_csv(self.config.parameters_file, index_col='time',
-                                  parse_dates=True)
+        self.origin = pd.read_csv(self.__config.parameters_file,
+                                  index_col='time', parse_dates=True)
         self.origin.index.name = 'time'
         self.origin.columns.name = 'parameters'
 
     def process_entire(self):
         self.process_origin()
         self.entire = self.origin
-        time_series = pd.Series(self.entire.index - self.entire.index[0])
-        self.entire.index = time_series.dt.total_seconds()
-        self.entire.index.name = 'time, s'
+        self.__data_to_seconds(self.entire)
 
     def process_steady(self):
         pass
 
     def process_transient(self):
         pass
+
+    def __data_to_seconds(self, data_sample):
+        time_series = pd.Series(self.origin.index - self.origin.index[0])
+        data_sample.index = time_series.dt.total_seconds()
+        data_sample.index.name = 'time, s'
 
     # Plot particular parameters types.
 
