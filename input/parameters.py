@@ -69,10 +69,22 @@ class Parameters(ParametersFrame):
         self.__data_to_seconds(self.entire)
 
     def process_steady(self):
-        pass
+        self.process_origin()
+        self.steady = self.origin
+        self.__data_to_seconds(self.steady)
+        self.steady = self.steady[
+            self.steady.index >= self.__config.steady_time_min]
+        self.steady = self.steady[
+            self.steady.index <= self.__config.steady_time_max]
 
     def process_transient(self):
-        pass
+        self.process_origin()
+        self.transient = self.origin
+        self.__data_to_seconds(self.transient)
+        self.transient = self.transient[
+            self.transient.index >= self.__config.transient_time_min]
+        self.transient = self.transient[
+            self.transient.index <= self.__config.transient_time_max]
 
     def __data_to_seconds(self, data_sample):
         time_series = pd.Series(self.origin.index - self.origin.index[0])
@@ -87,6 +99,12 @@ class Parameters(ParametersFrame):
     def plot_entire(self, y_min=None, y_max=None, y2_min=None, y2_max=None):
         plot_parameters(self.entire, 'entire', y_min, y_max, y2_min, y2_max)
 
+    def plot_steady(self, y_min=None, y_max=None, y2_min=None, y2_max=None):
+        plot_parameters(self.steady, 'steady', y_min, y_max, y2_min, y2_max)
+
+    def plot_transient(self, y_min=None, y_max=None, y2_min=None, y2_max=None):
+        plot_parameters(self.transient, 'transient', y_min, y_max, y2_min, y2_max)
+
 
 if __name__ == '__main__':
 
@@ -96,5 +114,5 @@ if __name__ == '__main__':
         ini_file = '../config/config.ini'
 
     parameters = Parameters(config_file=ini_file)
-    parameters.process_entire()
-    parameters.plot_entire()
+    parameters.process_steady()
+    parameters.plot_steady()
