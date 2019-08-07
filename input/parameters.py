@@ -59,7 +59,7 @@ class Parameters(ParametersFrame):
 
     def process_origin(s):
         s.origin = pd.read_csv(s.__config.parameters_file,
-                                  index_col='time', parse_dates=True)
+                               index_col='time', parse_dates=True)
         s.origin.index.name = 'time'
         s.origin.columns.name = 'parameters'
 
