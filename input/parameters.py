@@ -2,11 +2,11 @@ import sys
 import os
 
 import pandas as pd
+import configparser
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from input.config import Config
 from input.plot_parameters import plot_parameters
 
 
@@ -53,13 +53,15 @@ class ParametersFrame:
 class Parameters(ParametersFrame):
     def __init__(s, config_file):
         super().__init__()
-        s.__config = Config(file_name=config_file)
+        s.__config = configparser.ConfigParser()
+        s.__config.read(config_file)
 
     # Process particular parameters types.
 
     def process_origin(s):
-        s.origin = pd.read_csv(s.__config.parameters_file,
-                               index_col='time', parse_dates=True)
+        parameters_file = str(s.__config.get('Main', 'parameters_file'))
+        s.origin = pd.read_csv(parameters_file, index_col='time',
+                               parse_dates=True)
         s.origin.index.name = 'time'
         s.origin.columns.name = 'parameters'
 
@@ -72,19 +74,25 @@ class Parameters(ParametersFrame):
         s.process_origin()
         s.steady = s.origin
         s.__data_to_seconds(s.steady)
+
+        time_min = float(s.__config.get('Steady', 'time_min'))
+        time_max = float(s.__config.get('Steady', 'time_max'))
         s.steady = s.steady[
-            s.steady.index >= s.__config.steady_time_min]
+            s.steady.index >= time_min]
         s.steady = s.steady[
-            s.steady.index <= s.__config.steady_time_max]
+            s.steady.index <= time_max]
 
     def process_transient(s):
         s.process_origin()
         s.transient = s.origin
         s.__data_to_seconds(s.transient)
+
+        time_min = float(s.__config.get('Transient', 'time_min'))
+        time_max = float(s.__config.get('Transient', 'time_max'))
         s.transient = s.transient[
-            s.transient.index >= s.__config.transient_time_min]
+            s.transient.index >= time_min]
         s.transient = s.transient[
-            s.transient.index <= s.__config.transient_time_max]
+            s.transient.index <= time_max]
 
     def __data_to_seconds(s, data_sample):
         time_series = pd.Series(s.origin.index - s.origin.index[0])
