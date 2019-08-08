@@ -10,6 +10,7 @@ sys.path.append(os.path.join(current_path, '../'))
 
 from input.parameters import Parameters
 
+
 if __name__ == '__main__':
 
     if len(sys.argv) == 2:
@@ -17,11 +18,10 @@ if __name__ == '__main__':
     else:
         ini_file = '../config/config.ini'
 
-    config = configparser.ConfigParser()
-    config.read(ini_file)
-
     parameters = Parameters(config_file=ini_file)
     parameters.process_steady()
+    config = configparser.ConfigParser()
+    config.read(ini_file)
 
     n_time_points = len(parameters.steady.index)
     a = float(config.get('Properties', 'a_dens'))
@@ -38,12 +38,17 @@ if __name__ == '__main__':
     for i in range(1, 4, 1):
         G_factors[:, i] += (P_in ** (i + 2) - P_out ** (i + 2)) * a / (i + 2)
     G_factors /= visc * L
-
-    Free = np.zeros(4, dtype=float)
-
-    for i in range(4):
-        Free[i] = np.dot(G_factors[:, 1], G_fact)
+    Free = np.dot(G_fact, G_factors)
+    Matr = np.dot(G_factors.transpose(), G_factors)
+    theta = np.linalg.solve(Matr, Free)
+    G = np.dot(G_factors, theta)
 
     print('G_factors', G_factors)
-
+    print()
     print('Free', Free)
+    print()
+    print('Matr', Matr)
+    print()
+    print('theta', theta)
+    print()
+    print('G', G)
