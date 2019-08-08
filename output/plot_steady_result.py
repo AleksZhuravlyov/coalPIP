@@ -22,6 +22,7 @@ def plot_steady_result(data_sample, theta, dens_a, dens_b,
     ax0_2 = data_sample[pressures].plot(ax=axes[0], secondary_y=True,
                                         legend=True, marker='o', markersize=1.2)
     [t.set_visible(True) for t in axes[0].get_xticklabels()]
+    axes[0].set_xlabel(data_sample.index.name).set_visible(True)
 
     press_min = data_sample['Poutlet, Pa'].min()
     press_max = data_sample['Pinlet, Pa'].max()

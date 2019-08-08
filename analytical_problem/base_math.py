@@ -55,5 +55,6 @@ if __name__ == '__main__':
     steady_result['Pinlet, Pa'] = P_in
     steady_result['Poutlet, Pa'] = P_out
     steady_result['Qdiff'] = G_diff
+    steady_result.index.name = 'time, s'
 
     plot_steady_result(steady_result, theta=X_leastsq, dens_a=a, dens_b=b)
