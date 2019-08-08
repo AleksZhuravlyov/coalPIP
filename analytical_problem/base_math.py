@@ -10,6 +10,7 @@ sys.path.append(os.path.join(current_path, '../'))
 
 from input.parameters import Parameters
 
+from output.plot_steady_result import plot_steady_result
 
 if __name__ == '__main__':
 
@@ -30,25 +31,29 @@ if __name__ == '__main__':
     L = float(config.get('Properties', 'L'))
     P_in = parameters.steady['Pinlet, Pa']
     P_out = parameters.steady['Poutlet, Pa']
-    G_fact = parameters.steady['Qoutlet, st. m3/s']
+    G_fact = parameters.steady['Qoutlet, st. m3/s'] * (a * 1.E+5 + b)
 
-    G_factors = np.zeros((n_time_points, 4), dtype=float)
-    for i in range(4):
-        G_factors[:, i] = (P_in ** (i + 1) - P_out ** (i + 1)) * b / (i + 1)
-    for i in range(1, 4, 1):
-        G_factors[:, i] += (P_in ** (i + 2) - P_out ** (i + 2)) * a / (i + 2)
-    G_factors /= visc * L
-    Free = np.dot(G_fact, G_factors)
-    Matr = np.dot(G_factors.transpose(), G_factors)
-    theta = np.linalg.solve(Matr, Free)
-    G = np.dot(G_factors, theta)
+    polynomial_degree = 3
 
-    print('G_factors', G_factors)
-    print()
-    print('Free', Free)
-    print()
-    print('Matr', Matr)
-    print()
-    print('theta', theta)
-    print()
-    print('G', G)
+    k1 = np.arange(polynomial_degree + 1) + 1
+    k2 = np.arange(polynomial_degree + 1) + 2
+    G_factors = (np.power.outer(P_in, k1) - np.power.outer(P_out, k1)) * b / k1
+    G_factors += (np.power.outer(P_in, k2) - np.power.outer(P_out, k2)) * a / k2
+    G_factors /= L * visc
+
+    F_leastsq = np.dot(G_fact, G_factors)
+    A_leastsq = np.dot(G_factors.transpose(), G_factors)
+    X_leastsq = np.linalg.solve(A_leastsq, F_leastsq)
+
+    G_calc = np.dot(G_factors, X_leastsq)
+
+    G_diff = 2 * np.absolute(G_calc - G_fact)/np.sum(G_calc + G_fact)
+
+    steady_result = pd.DataFrame(index=parameters.steady.index, dtype=float)
+    steady_result['Qoutlet (fact), st. m3/s'] = G_fact / (a * 1.E+5 + b)
+    steady_result['Qoutlet (calc), st. m3/s'] = G_calc / (a * 1.E+5 + b)
+    steady_result['Pinlet, Pa'] = P_in
+    steady_result['Poutlet, Pa'] = P_out
+    steady_result['Qdiff'] = G_diff
+
+    plot_steady_result(steady_result, theta=X_leastsq, dens_a=a, dens_b=b)

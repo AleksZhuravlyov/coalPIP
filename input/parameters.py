@@ -122,5 +122,5 @@ if __name__ == '__main__':
         ini_file = '../config/config.ini'
 
     parameters = Parameters(config_file=ini_file)
-    parameters.process_steady()
-    parameters.plot_steady()
+    parameters.process_entire()
+    parameters.plot_entire()

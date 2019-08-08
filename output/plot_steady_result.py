@@ -2,6 +2,7 @@ import sys
 import os
 
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import numpy as np
 
 current_path = os.path.dirname(os.path.abspath(__file__))
@@ -9,7 +10,7 @@ sys.path.append(os.path.join(current_path, '../'))
 
 
 def plot_steady_result(data_sample, theta, dens_a, dens_b,
-                       title='steady state result',
+                       title='Steady State Result',
                        y_min=None, y_max=None, y2_min=None, y2_max=None):
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
 
@@ -45,8 +46,8 @@ def plot_steady_result(data_sample, theta, dens_a, dens_b,
         ax0_2.set_ylim([float(y2_min), float(y2_max)])
 
     fig.suptitle(title)
-    axes[0].set_title('consumptions and pressures')
-    axes[1].set_title('permeability and density')
+    axes[0].set_title('Consumptions and Pressures')
+    axes[1].set_title('Permeability and Density')
 
     axes[0].set_ylabel('consumption, m3/s')
     ax0_2.set_ylabel('pressure, Pa')
@@ -63,5 +64,13 @@ def plot_steady_result(data_sample, theta, dens_a, dens_b,
     ax0_2.ticklabel_format(axis='y', style='sci', scilimits=(-2, 2))
     axes[1].ticklabel_format(axis='y', style='sci', scilimits=(-2, 2))
     axes[1].ticklabel_format(axis='x', style='sci', scilimits=(-2, 2))
+
+    diff_text = 'Qoutlet Calculation Accuracy\n'
+    diff_text += '(relative deviation)\n'
+    diff_text += '\nmean    ' + "{:.2e}".format(data_sample['Qdiff'].mean())
+    diff_text += '\nstd        ' + "{:.2e}".format(data_sample['Qdiff'].std())
+    diff_text += '\nmedian ' + "{:.2e}".format(data_sample['Qdiff'].median())
+    diff_box = mpl.offsetbox.AnchoredText(diff_text, loc=6)
+    axes[0].add_artist(diff_box)
 
     plt.show()
