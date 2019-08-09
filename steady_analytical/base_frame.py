@@ -1,6 +1,5 @@
 import sys
 import os
-
 import configparser
 import numpy as np
 import pandas as pd

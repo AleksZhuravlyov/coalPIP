@@ -1,6 +1,5 @@
 import sys
 import os
-
 import matplotlib.pyplot as plt
 
 current_path = os.path.dirname(os.path.abspath(__file__))

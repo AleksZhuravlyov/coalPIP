@@ -3,9 +3,9 @@ import os
 import numpy as np
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '..'))
+sys.path.append(os.path.join(current_path, '../'))
 
-from leastsq.some import SomeWrapper
+from cpp2p_demo.some import SomeWrapper
 
 
 some_A = SomeWrapper(var_bool=bool(True),
@@ -62,7 +62,7 @@ print('var_array_str_B ', some_B.var_array_str)
 print()
 
 
-some = SomeWrapper();
+some = SomeWrapper()
 
 some.say_hi()
 print(some.return_hi())
