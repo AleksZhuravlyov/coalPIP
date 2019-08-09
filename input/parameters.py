@@ -66,13 +66,15 @@ class Parameters(ParametersFrame):
         s.origin.columns.name = 'parameters'
 
     def process_entire(s):
-        s.process_origin()
-        s.entire = s.origin
+        if s.origin is None:
+            s.process_origin()
+        s.entire = s.origin.copy()
         s.__data_to_seconds(s.entire)
 
     def process_steady(s):
-        s.process_origin()
-        s.steady = s.origin
+        if s.origin is None:
+            s.process_origin()
+        s.steady = s.origin.copy()
         s.__data_to_seconds(s.steady)
 
         time_min = float(s.__config.get('Steady', 'time_min'))
@@ -83,8 +85,9 @@ class Parameters(ParametersFrame):
             s.steady.index <= time_max]
 
     def process_transient(s):
-        s.process_origin()
-        s.transient = s.origin
+        if s.origin is None:
+            s.process_origin()
+        s.transient = s.origin.copy()
         s.__data_to_seconds(s.transient)
 
         time_min = float(s.__config.get('Transient', 'time_min'))
@@ -122,5 +125,5 @@ if __name__ == '__main__':
         ini_file = '../config/config.ini'
 
     parameters = Parameters(config_file=ini_file)
-    parameters.process_entire()
-    parameters.plot_entire()
+    # parameters.process_entire()
+    # parameters.plot_entire()
