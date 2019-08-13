@@ -10,7 +10,7 @@ sys.path.append(os.path.join(current_path, '../'))
 from input.parameters import Parameters
 
 
-class BaseFrame:
+class Structure:
     def __init__(s, config_file, polynomial_degree):
         s.__parameters = Parameters(config_file)
         s.parameters.process_steady()
@@ -32,10 +32,11 @@ class BaseFrame:
         s.__G_theta_der = None
         s.__A_leastsq = None
         s.__F_leastsq = None
-        s.__theta_leastsq = None
+        s.__theta = None
+        s.__theta_path = list()
 
         s.__G_calc = None
-        s.__G_diff = None
+        s.__G_rel_err = None
 
     @property
     def parameters(s):
@@ -142,12 +143,20 @@ class BaseFrame:
         s.__F_leastsq = np.array(F_leastsq, dtype=float)
 
     @property
-    def theta_leastsq(s):
-        return s.__theta_leastsq
+    def theta(s):
+        return s.__theta
 
-    @theta_leastsq.setter
-    def theta_leastsq(s, theta_leastsq):
-        s.__theta_leastsq = np.array(theta_leastsq, dtype=float)
+    @theta.setter
+    def theta(s, theta):
+        s.__theta = theta
+
+    @property
+    def theta_path(s):
+        return s.__theta_path
+
+    @theta_path.setter
+    def theta_path(s, theta_path):
+        s.__theta_path = theta_path
 
     @property
     def G_calc(s):
@@ -155,12 +164,12 @@ class BaseFrame:
 
     @G_calc.setter
     def G_calc(s, G_calc):
-        s.__G_calc = np.array(G_calc, dtype=float)
+        s.__G_calc = G_calc
 
     @property
-    def G_diff(s):
-        return s.__G_diff
+    def G_rel_err(s):
+        return s.__G_rel_err
 
-    @G_diff.setter
-    def G_diff(s, G_diff):
-        s.__G_diff = np.array(G_diff, dtype=float)
+    @G_rel_err.setter
+    def G_rel_err(s, G_rel_err):
+        s.__G_rel_err = G_rel_err

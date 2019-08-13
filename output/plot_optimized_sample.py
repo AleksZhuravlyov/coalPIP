@@ -9,9 +9,13 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 
-def plot_steady_result(data_sample, theta, dens_a, dens_b,
-                       title='Steady State Result',
-                       y_min=None, y_max=None, y2_min=None, y2_max=None):
+def plot_optimized_sample(base, title='title',
+                          y_min=None, y_max=None, y2_min=None, y2_max=None):
+    data_sample = base.return_optimized_sample()
+    theta = base.theta
+    dens_a = base.a_dens
+    dens_b = base.b_dens
+
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
 
     consumptions = ['Qoutlet (fact), st. m3/s', 'Qoutlet (calc), st. m3/s']
@@ -33,7 +37,7 @@ def plot_steady_result(data_sample, theta, dens_a, dens_b,
         perm += np.power(press, i) * theta[i]
     perm_curve = axes[1].plot(press, perm, label='permeability')
 
-    dens = dens_a*press + dens_b
+    dens = dens_a * press + dens_b
     ax1_2 = axes[1].twinx()
     dens_curve = ax1_2.plot(press, dens, 'tab:grey', label='density')
 
@@ -68,9 +72,8 @@ def plot_steady_result(data_sample, theta, dens_a, dens_b,
 
     diff_text = 'Qoutlet Calculation Accuracy\n'
     diff_text += '(relative deviation)\n'
-    diff_text += '\nmean    ' + "{:.2e}".format(data_sample['Qdiff'].mean())
-    diff_text += '\nstd        ' + "{:.2e}".format(data_sample['Qdiff'].std())
-    diff_text += '\nmedian ' + "{:.2e}".format(data_sample['Qdiff'].median())
+    diff_text += '\nmean    ' + "{:.2e}".format(data_sample['Gerror'].mean())
+    diff_text += '\nstd        ' + "{:.2e}".format(data_sample['Gerror'].std())
     diff_box = mpl.offsetbox.AnchoredText(diff_text, loc=6)
     axes[0].add_artist(diff_box)
 
