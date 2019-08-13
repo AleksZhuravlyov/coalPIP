@@ -85,7 +85,11 @@ theta = np.stack(x_mesh, axis=-1)
 
 plot_mesh = np.array(np.meshgrid(*[axes[x0_i], axes[x1_i]]))
 
-empirical_risk_mesh = steady_base.empirical_risk(theta.transpose(0, 1, 2, 4, 3))
+transp_mask = np.arange(len(theta.shape))
+transp_mask[-1], transp_mask[-2] = transp_mask[-2], transp_mask[-1]
+transp_mask = tuple(transp_mask)
+
+empirical_risk_mesh = steady_base.empirical_risk(theta.transpose(transp_mask))
 
 empirical_risk_mesh = np.squeeze(empirical_risk_mesh, axis=empirical_risk_slice)
 
