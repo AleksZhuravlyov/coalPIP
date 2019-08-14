@@ -65,8 +65,6 @@ def hessi(x):
 # result = optimize.minimize(f, ini, method="Nelder-Mead")
 # result = optimize.brute(f, ranges=ranges_var, Ns=100)
 # result = optimize.minimize(f, ini, bounds=ranges_var, method="L-BFGS-B")
-# result = optimize.minimize(f, ini, bounds=ranges_var, method="SLSQP")
-result = optimize.leastsq(f, ini)
-
+result = optimize.minimize(f, ini, bounds=ranges_var, method="SLSQP")
 
 print(result)

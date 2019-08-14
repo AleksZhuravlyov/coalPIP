@@ -19,6 +19,7 @@ class SteadyScipy:
         optimization = optimize.minimize(s.__steady_base.empirical_risk,
                                          s.__theta_ini, method="Nelder-Mead")
         s.__steady_base.theta = optimization.x
+        s.__steady_base.save_theta()
         s.__steady_base.calculate_G_using_theta()
         s.__steady_base.calculate_G_rel_err()
 

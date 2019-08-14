@@ -15,12 +15,19 @@ class SteadyBase(Structure):
         s.calculate_G_theta_der()
 
     def calculate_G_theta_der(s):
+        a_dens = s.properties.a_dens
+        b_dens = s.properties.b_dens
+        length = s.properties.length
+        visc = s.properties.visc
         k1 = np.arange(s.polynomial_degree + 1) + 1
         k2 = np.arange(s.polynomial_degree + 1) + 2
-        diff_press_k1 = np.power.outer(s.P_in, k1) - np.power.outer(s.P_out, k1)
-        s.G_theta_der = diff_press_k1 * s.b_dens / k1 / s.length / s.visc
-        diff_press_k2 = np.power.outer(s.P_in, k2) - np.power.outer(s.P_out, k2)
-        s.G_theta_der += diff_press_k2 * s.a_dens / k2 / s.length / s.visc
+        P_in = s.P_in
+        P_out = s.P_out
+
+        diff_press_k1 = np.power.outer(P_in, k1) - np.power.outer(P_out, k1)
+        s.G_theta_der = diff_press_k1 * b_dens / k1 / length / visc
+        diff_press_k2 = np.power.outer(P_in, k2) - np.power.outer(P_out, k2)
+        s.G_theta_der += diff_press_k2 * a_dens / k2 / length / visc
 
     def calculate_leastsq_problem(s):
         s.F_leastsq = np.dot(s.G_fact, s.G_theta_der)
@@ -29,6 +36,9 @@ class SteadyBase(Structure):
 
     def calculate_G_using_theta(s):
         s.G_calc = np.dot(s.G_theta_der, s.theta)
+
+    def save_theta(s):
+        np.savetxt(s.perm_file, s.theta)
 
     def calculate_G_rel_err(s):
         s.G_rel_err = np.absolute((s.G_calc.transpose() - s.G_fact) / s.G_fact)
@@ -45,14 +55,18 @@ class SteadyBase(Structure):
         return s.G_rel_err.mean(axis=0)
 
     def return_optimized_sample(s):
-        optimized_sample = pd.DataFrame(s.parameters.steady.index, dtype=float)
-        Q_fact = s.G_fact / (s.a_dens * 1.E+5 + s.b_dens)
+        a_dens = s.properties.a_dens
+        b_dens = s.properties.b_dens
+        time_index = s.parameters.steady.index
+
+        optimized_sample = pd.DataFrame(time_index, dtype=float)
+        Q_fact = s.G_fact.copy() / (a_dens * 1.E+5 + b_dens)
         optimized_sample['Qoutlet (fact), st. m3/s'] = Q_fact
-        Q_calc = s.G_calc / (s.a_dens * 1.E+5 + s.b_dens)
+        Q_calc = s.G_calc.copy() / (a_dens * 1.E+5 + b_dens)
         optimized_sample['Qoutlet (calc), st. m3/s'] = Q_calc
-        optimized_sample['Pinlet, Pa'] = s.P_in
-        optimized_sample['Poutlet, Pa'] = s.P_out
-        optimized_sample['Gerror'] = s.G_rel_err
+        optimized_sample['Pinlet, Pa'] = s.P_in.copy()
+        optimized_sample['Poutlet, Pa'] = s.P_out.copy()
+        optimized_sample['Gerror'] = s.G_rel_err.copy()
         optimized_sample.index.name = 'time, s'
         return optimized_sample
 

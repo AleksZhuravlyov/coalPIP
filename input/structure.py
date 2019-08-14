@@ -8,6 +8,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 from input.parameters import Parameters
+from input.properties import Properties
 
 
 class Structure:
@@ -20,20 +21,23 @@ class Structure:
         s.__polynomial_degree = int(polynomial_degree)
 
         s.__n_time_points = len(s.__parameters.steady.index)
-        s.__a_dens = float(s.__config.get('Properties', 'a_dens'))
-        s.__b_dens = float(s.__config.get('Properties', 'b_dens'))
-        s.__visc = float(s.__config.get('Properties', 'visc'))
-        s.__length = float(s.__config.get('Properties', 'length'))
+
+        s.__properties = None
+        s.properties = Properties(config_file)
+
         s.__P_in = np.array(s.parameters.steady['Pinlet, Pa'])
         s.__P_out = np.array(s.parameters.steady['Poutlet, Pa'])
         Q_fact = np.array(s.parameters.steady['Qoutlet, st. m3/s'])
-        s.__G_fact = Q_fact * (s.a_dens * 1.E+5 + s.b_dens)
-
+        s.__G_fact = Q_fact
+        s.__G_fact *= s.properties.a_dens * 1.E+5 + s.properties.b_dens
         s.__G_theta_der = None
         s.__A_leastsq = None
         s.__F_leastsq = None
         s.__theta = None
         s.__theta_path = list()
+
+        s.__perm_file = None
+        s.perm_file = s.__config.get('Matching', 'perm_file')
 
         s.__G_calc = None
         s.__G_rel_err = None
@@ -63,36 +67,12 @@ class Structure:
         s.__n_time_points = int(n_time_points)
 
     @property
-    def a_dens(s):
-        return s.__a_dens
+    def properties(s):
+        return s.__properties
 
-    @a_dens.setter
-    def a_dens(s, a_dens):
-        s.__a_dens = float(a_dens)
-
-    @property
-    def b_dens(s):
-        return s.__b_dens
-
-    @b_dens.setter
-    def b_dens(s, b_dens):
-        s.__b_dens = float(b_dens)
-
-    @property
-    def visc(s):
-        return s.__visc
-
-    @visc.setter
-    def visc(s, visc):
-        s.__visc = float(visc)
-
-    @property
-    def length(s):
-        return s.__length
-
-    @length.setter
-    def length(s, length):
-        s.__length = float(length)
+    @properties.setter
+    def properties(s, properties):
+        s.__properties = properties
 
     @property
     def P_in(s):
@@ -157,6 +137,14 @@ class Structure:
     @theta_path.setter
     def theta_path(s, theta_path):
         s.__theta_path = theta_path
+
+    @property
+    def perm_file(s):
+        return s.__perm_file
+
+    @perm_file.setter
+    def perm_file(s, perm_file):
+        s.__perm_file = str(perm_file)
 
     @property
     def G_calc(s):

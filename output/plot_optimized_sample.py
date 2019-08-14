@@ -13,8 +13,8 @@ def plot_optimized_sample(base, title='title',
                           y_min=None, y_max=None, y2_min=None, y2_max=None):
     data_sample = base.return_optimized_sample()
     theta = base.theta
-    dens_a = base.a_dens
-    dens_b = base.b_dens
+    dens_a = base.properties.a_dens
+    dens_b = base.properties.b_dens
 
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
 

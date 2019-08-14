@@ -15,6 +15,7 @@ class SteadyAnalytical:
     def calculate(s):
         s.__steady_base.calculate_leastsq_problem()
         s.__steady_base.calculate_G_using_theta()
+        s.__steady_base.save_theta()
         s.__steady_base.calculate_G_rel_err()
 
     def plot(s):
