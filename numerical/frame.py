@@ -44,10 +44,8 @@ class Frame:
         s.__grid_block_n = int(grid_block_n)
 
     def __str__(s):
-        out_str = '\nFrame'
-        out_str += '\n' + str(s.properties)
+        out_str = str(s.properties)
         out_str += '\ngrid_block_n ' + str(s.grid_block_n)
-        out_str += '\n'
         return out_str
 
 

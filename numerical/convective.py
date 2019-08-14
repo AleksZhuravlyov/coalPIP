@@ -26,10 +26,8 @@ class Convective(Frame):
         s.__theta_perm = np.array(theta_perm, dtype=float)
 
     def __str__(s):
-        out_str = '\nConvective'
-        out_str += '\n' + super().__str__()
+        out_str = super().__str__()
         out_str += '\ntheta_perm ' + str(s.theta_perm)
-        out_str += '\n'
         return out_str
 
 

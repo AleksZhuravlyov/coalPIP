@@ -25,10 +25,8 @@ class Local(Frame):
         s.__theta_poro = np.array(theta_poro, dtype=float)
 
     def __str__(s):
-        out_str = '\nLocal'
-        out_str += '\n' + super().__str__()
+        out_str = super().__str__()
         out_str += '\ntheta_poro ' + str(s.theta_poro)
-        out_str += '\n'
         return out_str
 
 

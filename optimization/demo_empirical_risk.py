@@ -10,7 +10,7 @@ from mpl_toolkits import mplot3d
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from analytical.steady_base import SteadyBase
+from analytical_steady.base import Base
 
 # steady_base.calculate_leastsq_problem()
 # steady_base.calculate_G_using_theta()
@@ -48,7 +48,7 @@ degree = 3
 
 ini = theta_origin.copy()
 ini[-1] = 0
-steady_base = SteadyBase(config_file=sys.argv[1], polynomial_degree=degree)
+base = Base(config_file=sys.argv[1], polynomial_degree=degree)
 
 theta_n = 101
 rate_min_max = 0.5
@@ -89,7 +89,7 @@ transp_mask = np.arange(len(theta.shape))
 transp_mask[-1], transp_mask[-2] = transp_mask[-2], transp_mask[-1]
 transp_mask = tuple(transp_mask)
 
-empirical_risk_mesh = steady_base.empirical_risk(theta.transpose(transp_mask))
+empirical_risk_mesh = base.empirical_risk(theta.transpose(transp_mask))
 
 empirical_risk_mesh = np.squeeze(empirical_risk_mesh, axis=empirical_risk_slice)
 

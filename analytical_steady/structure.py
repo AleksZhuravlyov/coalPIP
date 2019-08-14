@@ -20,7 +20,7 @@ class Structure:
         s.__config.read(config_file)
 
         s.__polynomial_degree = int(polynomial_degree)
-        s.__n_time_points = len(s.__parameters.steady.index)
+        s.__n_time_points = len(s.parameters.steady.index)
 
         s.__properties = None
         s.properties = Properties(config_file)
@@ -143,3 +143,15 @@ class Structure:
     @G_rel_err.setter
     def G_rel_err(s, G_rel_err):
         s.__G_rel_err = G_rel_err
+
+    def __str__(s):
+        out_str = 'polynomial_degree ' + str(s.polynomial_degree)
+        out_str += '\nn_time_points ' + str(s.n_time_points)
+        out_str += '\n' + str(s.properties)
+        out_str += '\nperm_file ' + str(s.perm_file)
+        return out_str
+
+
+if __name__ == '__main__':
+    structure = Structure(config_file=sys.argv[1], polynomial_degree=3)
+    print(structure)

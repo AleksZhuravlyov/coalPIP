@@ -6,12 +6,13 @@ import pandas as pd
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from analytical.structure import Structure
+from analytical_steady.structure import Structure
 
 
-class SteadyBase(Structure):
+class Base(Structure):
     def __init__(s, config_file, polynomial_degree):
         super().__init__(config_file, polynomial_degree)
+
         s.calculate_G_theta_der()
 
     def calculate_G_theta_der(s):
@@ -74,4 +75,5 @@ class SteadyBase(Structure):
 
 
 if __name__ == '__main__':
-    steady_base = SteadyBase(config_file=sys.argv[1], polynomial_degree=3)
+    base = Base(config_file=sys.argv[1], polynomial_degree=3)
+    print(base)

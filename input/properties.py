@@ -67,13 +67,11 @@ class Properties:
         s.__cross_sec_area = float(cross_sec_area)
 
     def __str__(s):
-        out_str = '\nProperties'
-        out_str += '\na_dens ' + str(s.a_dens)
+        out_str = 'a_dens ' + str(s.a_dens)
         out_str += '\nb_dens ' + str(s.b_dens)
         out_str += '\nvisc ' + str(s.visc)
         out_str += '\nlength ' + str(s.length)
         out_str += '\ncross_sec_area ' + str(s.cross_sec_area)
-        out_str += '\n'
         return out_str
 
 
