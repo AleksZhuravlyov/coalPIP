@@ -15,18 +15,16 @@ class Structure:
     def __init__(s, config_file, polynomial_degree):
         s.__parameters = Parameters(config_file)
         s.parameters.process_steady()
+
         s.__config = configparser.ConfigParser()
         s.__config.read(config_file)
 
         s.__polynomial_degree = int(polynomial_degree)
-
         s.__n_time_points = len(s.__parameters.steady.index)
 
         s.__properties = None
         s.properties = Properties(config_file)
 
-        s.__P_in = np.array(s.parameters.steady['Pinlet, Pa'])
-        s.__P_out = np.array(s.parameters.steady['Poutlet, Pa'])
         Q_fact = np.array(s.parameters.steady['Qoutlet, st. m3/s'])
         s.__G_fact = Q_fact
         s.__G_fact *= s.properties.a_dens * 1.E+5 + s.properties.b_dens
@@ -73,22 +71,6 @@ class Structure:
     @properties.setter
     def properties(s, properties):
         s.__properties = properties
-
-    @property
-    def P_in(s):
-        return s.__P_in
-
-    @P_in.setter
-    def P_in(s, P_in):
-        s.__P_in = np.array(P_in, dtype=float)
-
-    @property
-    def P_out(s):
-        return s.__P_out
-
-    @P_out.setter
-    def P_out(s, P_out):
-        s.__P_out = np.array(P_out, dtype=float)
 
     @property
     def G_fact(s):

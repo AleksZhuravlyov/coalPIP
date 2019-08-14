@@ -6,7 +6,7 @@ import pandas as pd
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from input.structure import Structure
+from analytical.structure import Structure
 
 
 class SteadyBase(Structure):
@@ -21,8 +21,8 @@ class SteadyBase(Structure):
         visc = s.properties.visc
         k1 = np.arange(s.polynomial_degree + 1) + 1
         k2 = np.arange(s.polynomial_degree + 1) + 2
-        P_in = s.P_in
-        P_out = s.P_out
+        P_in = s.parameters.steady['Pinlet, Pa']
+        P_out = s.parameters.steady['Poutlet, Pa']
 
         diff_press_k1 = np.power.outer(P_in, k1) - np.power.outer(P_out, k1)
         s.G_theta_der = diff_press_k1 * b_dens / k1 / length / visc
@@ -58,14 +58,16 @@ class SteadyBase(Structure):
         a_dens = s.properties.a_dens
         b_dens = s.properties.b_dens
         time_index = s.parameters.steady.index
+        P_in = np.array(s.parameters.steady['Pinlet, Pa']).copy()
+        P_out = np.array(s.parameters.steady['Poutlet, Pa']).copy()
 
         optimized_sample = pd.DataFrame(time_index, dtype=float)
         Q_fact = s.G_fact.copy() / (a_dens * 1.E+5 + b_dens)
         optimized_sample['Qoutlet (fact), st. m3/s'] = Q_fact
         Q_calc = s.G_calc.copy() / (a_dens * 1.E+5 + b_dens)
         optimized_sample['Qoutlet (calc), st. m3/s'] = Q_calc
-        optimized_sample['Pinlet, Pa'] = s.P_in.copy()
-        optimized_sample['Poutlet, Pa'] = s.P_out.copy()
+        optimized_sample['Pinlet, Pa'] = P_in
+        optimized_sample['Poutlet, Pa'] = P_out
         optimized_sample['Gerror'] = s.G_rel_err.copy()
         optimized_sample.index.name = 'time, s'
         return optimized_sample
