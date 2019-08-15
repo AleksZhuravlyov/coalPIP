@@ -16,10 +16,10 @@ class Base(Structure):
         s.calculate_G_theta_der()
 
     def calculate_G_theta_der(s):
-        a_dens = s.properties.a_dens
-        b_dens = s.properties.b_dens
-        length = s.properties.length
-        visc = s.properties.visc
+        a_dens = s.props.a_dens
+        b_dens = s.props.b_dens
+        length = s.props.length
+        visc = s.props.visc
         k1 = np.arange(s.polynomial_degree + 1) + 1
         k2 = np.arange(s.polynomial_degree + 1) + 2
         P_in = s.parameters.steady['Pinlet, Pa']
@@ -39,7 +39,7 @@ class Base(Structure):
         s.G_calc = np.dot(s.G_theta_der, s.theta)
 
     def save_theta(s):
-        np.savetxt(s.perm_file, s.theta)
+        np.savetxt(s.theta_perm_file, s.theta)
 
     def calculate_G_rel_err(s):
         s.G_rel_err = np.absolute((s.G_calc.transpose() - s.G_fact) / s.G_fact)
@@ -56,8 +56,8 @@ class Base(Structure):
         return s.G_rel_err.mean(axis=0)
 
     def return_optimized_sample(s):
-        a_dens = s.properties.a_dens
-        b_dens = s.properties.b_dens
+        a_dens = s.props.a_dens
+        b_dens = s.props.b_dens
         time_index = s.parameters.steady.index
         P_in = np.array(s.parameters.steady['Pinlet, Pa']).copy()
         P_out = np.array(s.parameters.steady['Poutlet, Pa']).copy()

@@ -8,7 +8,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 from input.parameters import Parameters
-from input.properties import Properties
+from input.props import Props
 
 
 class Structure:
@@ -22,20 +22,20 @@ class Structure:
         s.__polynomial_degree = int(polynomial_degree)
         s.__n_time_points = len(s.parameters.steady.index)
 
-        s.__properties = None
-        s.properties = Properties(config_file)
+        s.__props = None
+        s.props = Props(config_file)
 
         Q_fact = np.array(s.parameters.steady['Qoutlet, st. m3/s'])
         s.__G_fact = Q_fact
-        s.__G_fact *= s.properties.a_dens * 1.E+5 + s.properties.b_dens
+        s.__G_fact *= s.props.a_dens * 1.E+5 + s.props.b_dens
         s.__G_theta_der = None
         s.__A_leastsq = None
         s.__F_leastsq = None
         s.__theta = None
         s.__theta_path = list()
 
-        s.__perm_file = None
-        s.perm_file = s.__config.get('Matching', 'perm_file')
+        s.__theta_perm_file = None
+        s.theta_perm_file = s.__config.get('Matching', 'theta_perm_file')
 
         s.__G_calc = None
         s.__G_rel_err = None
@@ -65,12 +65,12 @@ class Structure:
         s.__n_time_points = int(n_time_points)
 
     @property
-    def properties(s):
-        return s.__properties
+    def props(s):
+        return s.__props
 
-    @properties.setter
-    def properties(s, properties):
-        s.__properties = properties
+    @props.setter
+    def props(s, props):
+        s.__props = props
 
     @property
     def G_fact(s):
@@ -121,11 +121,11 @@ class Structure:
         s.__theta_path = theta_path
 
     @property
-    def perm_file(s):
+    def theta_perm_file(s):
         return s.__perm_file
 
-    @perm_file.setter
-    def perm_file(s, perm_file):
+    @theta_perm_file.setter
+    def theta_perm_file(s, perm_file):
         s.__perm_file = str(perm_file)
 
     @property
@@ -147,8 +147,8 @@ class Structure:
     def __str__(s):
         out_str = 'polynomial_degree ' + str(s.polynomial_degree)
         out_str += '\nn_time_points ' + str(s.n_time_points)
-        out_str += '\n' + str(s.properties)
-        out_str += '\nperm_file ' + str(s.perm_file)
+        out_str += '\n' + str(s.props)
+        out_str += '\nperm_file ' + str(s.theta_perm_file)
         return out_str
 
 

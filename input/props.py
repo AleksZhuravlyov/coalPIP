@@ -6,7 +6,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 
-class Properties:
+class Props:
     def __init__(s, config_file):
         s.__config = configparser.ConfigParser()
         s.__config.read(config_file)
@@ -23,8 +23,8 @@ class Properties:
         s.__length = None
         s.length = s.__config.get('Properties', 'length')
 
-        s.__cross_sec_area = None
-        s.cross_sec_area = s.__config.get('Properties', 'cross_sec_area')
+        s.__area = None
+        s.area = s.__config.get('Properties', 'area')
 
     @property
     def a_dens(s):
@@ -59,22 +59,22 @@ class Properties:
         s.__length = float(length)
 
     @property
-    def cross_sec_area(s):
-        return s.__cross_sec_area
+    def area(s):
+        return s.__area
 
-    @cross_sec_area.setter
-    def cross_sec_area(s, cross_sec_area):
-        s.__cross_sec_area = float(cross_sec_area)
+    @area.setter
+    def area(s, area):
+        s.__area = float(area)
 
     def __str__(s):
         out_str = 'a_dens ' + str(s.a_dens)
         out_str += '\nb_dens ' + str(s.b_dens)
         out_str += '\nvisc ' + str(s.visc)
         out_str += '\nlength ' + str(s.length)
-        out_str += '\ncross_sec_area ' + str(s.cross_sec_area)
+        out_str += '\narea ' + str(s.area)
         return out_str
 
 
 if __name__ == '__main__':
-    properties = Properties(config_file=sys.argv[1])
-    print(properties)
+    props = Props(config_file=sys.argv[1])
+    print(props)
