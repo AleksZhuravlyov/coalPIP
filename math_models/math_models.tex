@@ -107,12 +107,12 @@
         %
         \begin{eqnarray}
             \label{eq:poisson_integral_num}
-            \delta_{+} - \delta_{-} = 0,
+            \beta_{-}\Delta_{P-} - \beta_{+}\Delta_{P+} = 0,
         \end{eqnarray}
         %
         \begin{eqnarray}
-            \label{eq:delta}
-            \delta^{m} = -\overline{\lambda} \nabla^{m}_{P}\Delta \Omega,
+            \label{eq:beta}
+            \beta = - \frac{\overline{\lambda} \Delta \Omega}{\Delta L},
         \end{eqnarray}
         %
         \begin{eqnarray}
@@ -121,13 +121,13 @@
         \end{eqnarray}
         %
         \begin{eqnarray}
-            \label{eq:nabla_P_num}
-            \nabla^{m}_{P} = \frac{P^{m}_{+} - P^{m}_{-}}{\Delta L},
+            \label{eq:delta_P_num}
+            \Delta_{P} = P_{+} - P_{-},
         \end{eqnarray}
         %
         \begin{eqnarray}
             \label{eq:Consumption_poisson_integral}
-            G = \delta_{N-1}.
+            G_{out} = \beta_-\Delta_{P-} \Big|_ {N-1}.
         \end{eqnarray}
 
         \columnbreak
@@ -147,7 +147,7 @@
         %
         \begin{eqnarray}
             \label{eq:conductivity_num}
-            \alpha \Delta^{t}_{P} + \delta_{+}^{n+1} - \delta_{-}^{n+1} = 0,
+            \alpha \Delta^{t}_{P} + \beta^n_{-}\Delta^{n+1}_{P-} - \beta^n_{+}\Delta^{n+1}_{P+}= 0,
         \end{eqnarray}
         %
         \begin{eqnarray}
@@ -162,7 +162,7 @@
         %
         \begin{eqnarray}
             \label{eq:Consumption_conductivity_integral}
-            G^n = \delta_{N-1}^{n}.
+            G_{out}^{n+1} = \beta^n_-\Delta^{n+1}_{P-} \Big|_ {N-1}.                        
         \end{eqnarray}
     \end{multicols}
 
