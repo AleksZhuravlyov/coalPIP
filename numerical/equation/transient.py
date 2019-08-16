@@ -4,12 +4,12 @@ import numpy as np
 from scipy.sparse import dia_matrix
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
-from numerical.steady_eq_frame import SteadyEqFrame
+from numerical.equation.equation import Equation
 
 
-class SteadyEq(SteadyEqFrame):
+class Transient(Equation):
     def __init__(s, config_file):
         super().__init__(config_file)
 
@@ -19,6 +19,8 @@ class SteadyEq(SteadyEqFrame):
 
 
 if __name__ == '__main__':
-    steady_eq = SteadyEq(config_file=sys.argv[1])
-    steady_eq.math_frame.load_txt_theta_perm()
-    print(steady_eq)
+    transient = Transient(config_file=sys.argv[1])
+    transient.local.load_txt_theta_perm()
+    transient.local.load_txt_theta_poro()
+    transient.local.delta_t = 1
+    print(transient)
