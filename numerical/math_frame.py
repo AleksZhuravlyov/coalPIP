@@ -9,7 +9,7 @@ sys.path.append(os.path.join(current_path, '../'))
 from input.props import Props
 
 
-class Frame:
+class MathFrame:
     def __init__(s, config_file):
         s.__config = None
         s.config = configparser.ConfigParser()
@@ -82,6 +82,6 @@ class Frame:
 
 
 if __name__ == '__main__':
-    frame = Frame(config_file=sys.argv[1])
-    frame.load_txt_theta_perm()
-    print(frame)
+    math_frame = MathFrame(config_file=sys.argv[1])
+    math_frame.load_txt_theta_perm()
+    print(math_frame)
