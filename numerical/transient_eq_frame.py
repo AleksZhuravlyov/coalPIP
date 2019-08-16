@@ -12,20 +12,13 @@ class TransientEqFrame(SteadyEqFrame):
     def __init__(s, config_file):
         super().__init__(config_file)
 
-        s.__local_math = None
         s.local_math = LocalMath(s.math_frame)
-
-    @property
-    def local_math(s):
-        return s.__local_math
-
-    @local_math.setter
-    def local_math(s, local):
-        s.__local_math = local
 
     def __str__(s):
         out_str = super().__str__()
-        out_str += '\n' + str(s.convective_math)
+        out_str += '\ntheta_poro ' + str(s.local_math.theta_poro)
+        out_str += '\ndelta_volume ' + str(s.local_math.delta_volume)
+        out_str += '\ndelta_t ' + str(s.local_math.delta_t)
         return out_str
 
 
@@ -33,4 +26,5 @@ if __name__ == '__main__':
     transient_eq_frame = TransientEqFrame(config_file=sys.argv[1])
     transient_eq_frame.math_frame.load_txt_theta_perm()
     transient_eq_frame.local_math.load_txt_theta_poro()
+    transient_eq_frame.local_math.delta_t = 1
     print(transient_eq_frame)

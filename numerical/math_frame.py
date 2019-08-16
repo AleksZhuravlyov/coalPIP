@@ -11,49 +11,14 @@ from input.props import Props
 
 class MathFrame:
     def __init__(s, config_file):
-        s.__config = None
         s.config = configparser.ConfigParser()
         s.config.read(config_file)
 
-        s.__props = None
         s.props = Props(config_file)
 
-        s.__grid_block_n = None
-        s.grid_block_n = s.__config.get('Numerical', 'grid_block_n')
+        s.grid_block_n = int(s.config.get('Numerical', 'grid_block_n'))
 
-        s.__theta_perm = None
-
-    @property
-    def config(s):
-        return s.__config
-
-    @config.setter
-    def config(s, config):
-        s.__config = config
-
-    @property
-    def props(s):
-        return s.__props
-
-    @props.setter
-    def props(s, props):
-        s.__props = props
-
-    @property
-    def grid_block_n(s):
-        return s.__grid_block_n
-
-    @grid_block_n.setter
-    def grid_block_n(s, grid_block_n):
-        s.__grid_block_n = int(grid_block_n)
-
-    @property
-    def theta_perm(s):
-        return s.__theta_perm
-
-    @theta_perm.setter
-    def theta_perm(s, theta_perm):
-        s.__theta_perm = np.array(theta_perm, dtype=float)
+        s.theta_perm = None
 
     def __str__(s):
         out_str = str(s.props)

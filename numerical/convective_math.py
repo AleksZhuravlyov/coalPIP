@@ -10,27 +10,9 @@ from numerical.math_frame import MathFrame
 
 class ConvectiveMath:
     def __init__(s, math_frame):
-        s.__math_frame = math_frame
         s.math_frame = math_frame
 
-        s.__delta_length = None
         s.delta_length = s.math_frame.props.length / s.math_frame.grid_block_n
-
-    @property
-    def math_frame(s):
-        return s.__math_frame
-
-    @math_frame.setter
-    def math_frame(s, math_frame):
-        s.__math_frame = math_frame
-
-    @property
-    def delta_length(s):
-        return s.__delta_length
-
-    @delta_length.setter
-    def delta_length(s, delta_length):
-        s.__delta_length = float(delta_length)
 
     def __str__(s):
         out_str = str(s.math_frame)

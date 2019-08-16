@@ -22,4 +22,5 @@ if __name__ == '__main__':
     transient_eq = TransientEq(config_file=sys.argv[1])
     transient_eq.math_frame.load_txt_theta_perm()
     transient_eq.local_math.load_txt_theta_poro()
+    transient_eq.local_math.delta_t = 1
     print(transient_eq)
