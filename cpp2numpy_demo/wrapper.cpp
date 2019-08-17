@@ -7,8 +7,8 @@ BOOST_PYTHON_MODULE (functions) {
     Py_Initialize();
     np::initialize();
 
-    def("return_array", returnArray);
-    def("square_array", squareArray, p::args("array"));
-    def("sum_array", sumArray, p::args("array"));
+    p::def("return_array", returnArray);
+    p::def("square_array", squareArray, p::args("array"));
+    p::def("sum_array", sumArray, p::args("array"));
 
 }
