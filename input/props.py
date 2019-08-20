@@ -11,12 +11,19 @@ class Props:
     def __init__(s, config_file):
         s.__config = configparser.ConfigParser()
         s.__config.read(config_file)
+        get = s.__config.get
 
-        s.a_dens = float(s.__config.get('Properties', 'a_dens'))
-        s.b_dens = float(s.__config.get('Properties', 'b_dens'))
-        s.visc = float(s.__config.get('Properties', 'visc'))
-        s.length = float(s.__config.get('Properties', 'length'))
-        s.area = float(s.__config.get('Properties', 'area'))
+        s.a_dens = float(get('Properties', 'a_dens'))
+        s.b_dens = float(get('Properties', 'b_dens'))
+        s.visc = float(get('Properties', 'visc'))
+        s.length = float(get('Properties', 'length'))
+        s.area = float(get('Properties', 'area'))
+        s.grid_block_n = float(get('Properties', 'grid_block_n'))
+        s.delta_volume = s.length * s.area / s.grid_block_n
+
+        s.theta_perm_file = str(get('Matching', 'theta_perm_file'))
+        s.theta_poro_file = str(get('Matching', 'theta_poro_file'))
+        s.delta_length = s.length / s.grid_block_n
 
     def get_props_array(s):
         props_list = list()
@@ -25,8 +32,16 @@ class Props:
         props_list.append(s.visc)
         props_list.append(s.length)
         props_list.append(s.area)
-
+        props_list.append(s.grid_block_n)
+        props_list.append(s.delta_volume)
+        props_list.append(s.delta_length)
         return np.array(props_list, dtype=float)
+
+    def get_theta_files_array(s):
+        theta_files_list = list()
+        theta_files_list.append(s.theta_perm_file)
+        theta_files_list.append(s.theta_poro_file)
+        return np.array(theta_files_list, dtype=str)
 
     def __str__(s):
         out_str = 'a_dens ' + str(s.a_dens)
@@ -34,6 +49,9 @@ class Props:
         out_str += '\nvisc ' + str(s.visc)
         out_str += '\nlength ' + str(s.length)
         out_str += '\narea ' + str(s.area)
+        out_str += '\ngrid_block_n ' + str(s.grid_block_n)
+        out_str += '\ndelta_volume ' + str(s.delta_volume)
+        out_str += '\ndelta_length ' + str(s.delta_length)
         return out_str
 
 

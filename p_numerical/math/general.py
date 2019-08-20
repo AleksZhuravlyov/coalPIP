@@ -16,7 +16,7 @@ class General:
 
         s.props = Props(config_file)
 
-        s.grid_block_n = int(s.config.get('Numerical', 'grid_block_n'))
+        s.grid_block_n = int(s.config.get('Properties', 'grid_block_n'))
 
     def __str__(s):
         out_str = str(s.props)

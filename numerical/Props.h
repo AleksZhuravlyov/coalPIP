@@ -20,6 +20,9 @@ public:
     double visc;
     double length;
     double area;
+    double gridBlockN;
+    double deltaVolume;
+    double deltaLength;
 
 };
 

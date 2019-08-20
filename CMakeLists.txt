@@ -58,7 +58,12 @@ python_add_module(solver
         numerical/SolverWrapper.cpp
         numerical/Solver.cpp
         numerical/Props.cpp
-        numerical/math/General.cpp)
+        numerical/math/General.cpp
+        numerical/math/Local.cpp
+        numerical/math/Convective.cpp
+        numerical/equation/Equation.cpp
+        numerical/equation/Steady.cpp
+        numerical/equation/Transient.cpp)
 
 target_include_directories(solver PUBLIC
         ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
