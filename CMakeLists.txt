@@ -5,26 +5,17 @@ project(coalPIP)
 set(CMAKE_CXX_STANDARD 17)
 
 
-# include directories
-
-include_directories(.)
-include_directories(cpp2p_demo)
-include_directories(cpp2numpy_demo)
-include_directories(utilities)
-
-
-# pakages
-
 find_package(PythonLibs 3.7 REQUIRED)
+
 find_package(Boost COMPONENTS python37 numpy37 REQUIRED)
 
 
-# numerical module
-
 include_directories(
+        utilities
         numerical
         numerical/math
         numerical/equation)
+
 
 python_add_module(solver
         numerical/SolverWrapper.cpp
@@ -37,6 +28,7 @@ python_add_module(solver
         numerical/equation/Steady.cpp
         numerical/equation/Transient.cpp)
 
+
 target_include_directories(solver PUBLIC
         ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
 
@@ -44,8 +36,3 @@ target_link_libraries(solver ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
 
 set_target_properties(solver PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/../numerical)
-
-
-# C++ executable
-
-add_executable(main main.cpp)
