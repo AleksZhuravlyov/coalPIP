@@ -5,7 +5,7 @@ import numpy as np
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
-from numerical.math.general import General
+from p_numerical.math.general import General
 
 
 class Local:

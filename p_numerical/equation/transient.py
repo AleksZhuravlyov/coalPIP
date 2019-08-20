@@ -6,7 +6,7 @@ from scipy.sparse import dia_matrix
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
-from numerical.equation.equation import Equation
+from p_numerical.equation.equation import Equation
 
 
 class Transient(Equation):

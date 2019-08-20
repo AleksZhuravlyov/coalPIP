@@ -4,9 +4,9 @@ import os
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
-from numerical.math.general import General
-from numerical.math.local import Local
-from numerical.math.convective import Convective
+from p_numerical.math.general import General
+from p_numerical.math.local import Local
+from p_numerical.math.convective import Convective
 
 
 class Equation:
