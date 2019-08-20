@@ -33,20 +33,6 @@ set_target_properties(some PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/../cpp2p_demo)
 
 
-# functions demo module
-
-python_add_module(functions
-        cpp2numpy_demo/functions.cpp cpp2numpy_demo/wrapper.cpp)
-
-target_include_directories(functions PUBLIC
-        ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
-
-target_link_libraries(functions ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
-
-set_target_properties(functions PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/../cpp2numpy_demo)
-
-
 # numerical module
 
 include_directories(
