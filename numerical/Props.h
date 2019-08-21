@@ -20,9 +20,10 @@ public:
     double visc;
     double length;
     double area;
-    double gridBlockN;
+    int gridBlockN;
     double deltaVolume;
     double deltaLength;
+    double iterativeAccuracy;
 
 };
 

@@ -17,6 +17,25 @@ public:
 
     ~Steady() override = default;
 
+    void calculateLinearPressDistrib(const double &pressIn,
+                                     const double &pressOut);
+
+    void calculateSteadyMatrix();
+
+    void calculateSteadyFreeVector(const double &pressIn,
+                                   const double &pressOut);
+
+
+
+
+    void runIterativeSteadyProcedure(const double &pressIn,
+                                     const double &pressOut);
+
+    void calculateConsumptionSet() final;
+
+    void setTheta(const std::vector<double> &theta) final;
+
+
 };
 
 

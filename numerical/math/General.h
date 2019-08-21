@@ -23,8 +23,6 @@ public:
 
     double densDer(const double &press);
 
-    static double deltaPress(const double &pressA, const double &pressB);
-
 
     Props props;
 

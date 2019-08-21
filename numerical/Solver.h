@@ -1,7 +1,7 @@
 #ifndef COALPIP_SOLVER_H
 #define COALPIP_SOLVER_H
 
-#include <Transient.h>
+#include <Steady.h>
 
 
 class Solver {
@@ -18,11 +18,11 @@ public:
     virtual ~Solver() {}
 
 
-    Transient transient;
+    Steady steady;
 
     void print();
 
-    void test();
+    double test(const std::vector<double> &thetaPerm);
 
 
 };

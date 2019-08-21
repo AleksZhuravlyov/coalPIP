@@ -37,10 +37,10 @@ public:
 
     double poroDer(const double &press);
 
-    void CalculateAlpha(const std::vector<double> &press,
+    void calculateAlpha(const std::vector<double> &press,
                         const double &dt);
 
-    void CalculateLambda(const std::vector<double> &press);
+    void calculateLambda(const std::vector<double> &press);
 
 
     General general;

@@ -45,7 +45,7 @@ class SteadyScipy(Base):
 if __name__ == '__main__':
     degree = 1
     ini = np.zeros(degree + 1, dtype=float)
-    ini[0] = 1.e-17
+    ini[0] = 1.e-14
 
     steady_scipy = SteadyScipy(config_file=sys.argv[1],
                                polynomial_degree=degree, theta_ini=ini)

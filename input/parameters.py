@@ -88,5 +88,6 @@ class Parameters(ParametersFrame):
 
 if __name__ == '__main__':
     parameters = Parameters(config_file=sys.argv[1])
-    parameters.process_origin()
+    parameters.process_steady()
+    parameters.plot('steady')
     print(parameters)

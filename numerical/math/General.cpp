@@ -18,7 +18,3 @@ double General::dens(const double &press) {
 double General::densDer(const double &press) {
     return props.bDens;
 }
-
-double General::deltaPress(const double &pressA, const double &pressB) {
-    return pressB - pressA;
-}

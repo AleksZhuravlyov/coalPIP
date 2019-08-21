@@ -26,8 +26,6 @@ public:
 
     void calculateBeta(const std::vector<double> &lambda);
 
-    double consumption(const std::vector<double> &press);
-
 
     General general;
 

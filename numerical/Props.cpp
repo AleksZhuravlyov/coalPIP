@@ -11,7 +11,8 @@ Props::Props(const std::vector<double> &propsVector) :
         area(propsVector[4]),
         gridBlockN(propsVector[5]),
         deltaVolume(propsVector[6]),
-        deltaLength(propsVector[7]){}
+        deltaLength(propsVector[7]),
+        iterativeAccuracy(propsVector[8]){}
 
 
 std::ostream &operator<<(std::ostream &stream, const Props &props) {
@@ -23,5 +24,6 @@ std::ostream &operator<<(std::ostream &stream, const Props &props) {
     stream << "gridBlockN " << props.gridBlockN << std::endl;
     stream << "deltaVolume " << props.deltaVolume << std::endl;
     stream << "deltaLength " << props.deltaLength << std::endl;
+    stream << "iterativeAccuracy " << props.iterativeAccuracy << std::endl;
     return stream;
 }

@@ -16,6 +16,8 @@ public:
 
     ~Transient() override = default;
 
+    void setTheta(const std::vector<double> &theta) final;
+
 };
 
 

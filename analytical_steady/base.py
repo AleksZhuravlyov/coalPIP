@@ -29,6 +29,7 @@ class Base(Structure):
         s.G_theta_der = diff_press_k1 * b_dens / k1 / length / visc
         diff_press_k2 = np.power.outer(P_in, k2) - np.power.outer(P_out, k2)
         s.G_theta_der += diff_press_k2 * a_dens / k2 / length / visc
+        s.G_theta_der *= s.props.area
 
     def calculate_leastsq_problem(s):
         s.F_leastsq = np.dot(s.G_fact, s.G_theta_der)

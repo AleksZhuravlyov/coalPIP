@@ -7,4 +7,11 @@ Transient::Transient(const std::vector<double> &propsVector,
                      const std::vector<double> &pressOut,
                      const std::vector<double> &consumption) :
         Equation(propsVector, thetaFiles,
-                 time, pressIn, pressOut, consumption) {}
+                 time, pressIn, pressOut, consumption) {
+    local.loadThetaPerm();
+}
+
+
+void Transient::setTheta(const std::vector<double> &theta){
+    local.thetaPoro = theta;
+}

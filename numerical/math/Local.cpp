@@ -9,10 +9,7 @@ Local::Local(const General &_general,
         thetaPermFile(thetaFiles[0]),
         thetaPoroFile(thetaFiles[1]),
         alpha(std::vector<double>(general.props.gridBlockN, 0)),
-        lambda(std::vector<double>(general.props.gridBlockN, 0)) {
-    loadThetaPerm();
-    loadThetaPoro();
-}
+        lambda(std::vector<double>(general.props.gridBlockN, 0)) {}
 
 
 std::ostream &operator<<(std::ostream &stream, const Local &local) {
@@ -86,7 +83,7 @@ double Local::poroDer(const double &press) {
     return value;
 }
 
-void Local::CalculateAlpha(const std::vector<double> &press,
+void Local::calculateAlpha(const std::vector<double> &press,
                            const double &dt) {
 
     for (int i = 0; i < alpha.size(); i++) {
@@ -97,7 +94,7 @@ void Local::CalculateAlpha(const std::vector<double> &press,
 
 }
 
-void Local::CalculateLambda(const std::vector<double> &press) {
+void Local::calculateLambda(const std::vector<double> &press) {
     for (int i = 0; i < lambda.size(); i++)
         lambda[i] =
                 general.dens(press[i]) * perm(press[i]) / general.props.visc;

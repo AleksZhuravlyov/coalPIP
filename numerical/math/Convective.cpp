@@ -29,9 +29,3 @@ void Convective::calculateBeta(const std::vector<double> &lambda) {
         beta[i] *= general.props.area / general.props.deltaLength;
     }
 }
-
-double Convective::consumption(const std::vector<double> &press) {
-    auto index = beta.size() - 2;
-    return beta[index] *
-           General::deltaPress(press[right(index)], press[right(index)]);
-}

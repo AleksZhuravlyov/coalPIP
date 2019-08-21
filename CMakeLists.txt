@@ -9,6 +9,8 @@ find_package(PythonLibs 3.7 REQUIRED)
 
 find_package(Boost COMPONENTS python37 numpy37 REQUIRED)
 
+find_package(Eigen3 REQUIRED)
+
 
 include_directories(
         utilities
@@ -30,9 +32,11 @@ python_add_module(solver
 
 
 target_include_directories(solver PUBLIC
-        ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS})
+        ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 
-target_link_libraries(solver ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
+target_link_libraries(solver
+        ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} ${EIGEN3_LIBRARIES})
 
 set_target_properties(solver PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/../numerical)
+

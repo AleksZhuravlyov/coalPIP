@@ -2,10 +2,18 @@
 #define COALPIP_EQUATION_H
 
 #include <vector>
+#include <Eigen/Sparse>
 
 #include <General.h>
 #include <Local.h>
 #include <Convective.h>
+
+
+typedef Eigen::Triplet<double> Triplet;
+typedef Eigen::SparseMatrix<double, Eigen::RowMajor> Matrix;
+typedef Matrix::InnerIterator MatrixIterator;
+typedef Eigen::VectorXd Vector;
+typedef Eigen::SparseLU<Eigen::SparseMatrix<double>> SparseLU;
 
 
 class Equation {
@@ -17,7 +25,7 @@ public:
              const std::vector<double> &_time,
              const std::vector<double> &_pressIn,
              const std::vector<double> &_pressOut,
-             const std::vector<double> &_consumption);
+             const std::vector<double> &_consumptionFact);
 
     virtual ~Equation() = default;
 
@@ -26,19 +34,49 @@ public:
                                     const Equation &equation);
 
 
+    void calculateLambda();
+
+    void calculateBeta();
+
+    void calculatePress();
+
+    double calculatePressRelDiff();
+
+    double calculateConsumption();
+
+    virtual void calculateConsumptionSet()  = 0;
+
+    virtual void setTheta(const std::vector<double> &theta)  = 0;
+
+    double calculateEmpiricalRisk(const std::vector<double> &thetaPerm);
+
+
     General general;
 
     Local local;
 
     Convective convective;
 
+    int &dim;
+
     std::vector<double> time;
     std::vector<double> pressIn;
     std::vector<double> pressOut;
-    std::vector<double> consumption;
+    std::vector<double> consumptionFact;
+
+    std::vector<double> consumptionCalc;
 
 
     std::vector<std::vector<double>> press;
+
+    int iCurr;
+    int iPrev;
+
+    Matrix matrix;
+
+    Vector freeVector;
+
+    Vector variable;
 
 };
 
