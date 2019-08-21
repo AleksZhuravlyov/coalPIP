@@ -172,22 +172,22 @@
         \begin{center}
         {\large \textbf{Analytical Steady State}}
         \end{center}
-
+        \vspace{-0.2cm}
         \begin{eqnarray}
             \label{eq:poisson_diff}
             \frac{d}{dx}\rho\frac{k}{\mu} \frac{dP}{dx} = 0,
         \end{eqnarray}
-        %
+        \vspace{-0.5cm}
         \begin{eqnarray}
             \label{eq:poisson_diff_bound}
             P\left(0\right) = P_{in}, \; P\left(L\right) = P_{out},
         \end{eqnarray}
-        %
+        \vspace{-0.5cm}
         \begin{eqnarray}
             \label{eq:consumption_poisson_diff_geniral}
-            G = - \frac{1}{L} \int \limits_{P_{in}}^{P_{out}} \rho\frac{k}{\mu} dP,
+            G = - \frac{\Omega}{L} \int \limits_{P_{in}}^{P_{out}} \rho\frac{k}{\mu} dP,
         \end{eqnarray}
-        %
+        \vspace{-0.5cm}
         \begin{eqnarray}
             \label{eq:poisson_dencity_particular}
             \rho = a_{\rho}P + b_{\rho},
@@ -210,11 +210,11 @@
         \begin{eqnarray}
             \label{eq:consumption_poisson_diff_particular}
             \begin{gathered}
-                G = \frac{a_{\rho}\theta_{3}}{5L\mu} \left(P_{in}^5 -P_{out}^5 \right) +\\
-                +\frac{a_{\rho}\theta_{2} + b_{\rho}\theta_{3}}{4L\mu} \left(P_{in}^4 -P_{out}^4 \right) +\\
-                +\frac{a_{\rho}\theta_{1} + b_{\rho}\theta_{2}}{3L\mu} \left(P_{in}^3 -P_{out}^3 \right) +\\
-                +\frac{a_{\rho}\theta_{0} + b_{\rho}\theta_{1}}{2L\mu} \left(P_{in}^2 -P_{out}^2 \right) +
-                \frac{b_{\rho}\theta_{0}}{L\mu} \left(P_{in} -P_{out} \right).
+                G =   \frac{\Omega }{L\mu} \left(  \frac{a_{\rho}\theta_{3}}{5L\mu} \left(P_{in}^5 -P_{out}^5 \right) + \right.\\
+                +\frac{a_{\rho}\theta_{2} + b_{\rho}\theta_{3}}{4} \left(P_{in}^4 -P_{out}^4 \right) +\\
+                +\frac{ a_{\rho}\theta_{1} +  b_{\rho}\theta_{2}}{3} \left(P_{in}^3 -P_{out}^3 \right) +\\
+                +\frac{ a_{\rho}\theta_{0} + b_{\rho}\theta_{1}}{2} \left(P_{in}^2 -P_{out}^2 \right) + \\
+                \left.+\frac{ b_{\rho}\theta_{0}}{1} \left(P_{in} -P_{out} \right)\right).
             \end{gathered}
         \end{eqnarray}
 
@@ -249,8 +249,8 @@
         \label{eq:consumption_poisson_diff_particular_d}
         G = \sum \limits_{i=0}^{3} \frac{\partial G}{\partial \theta_i}\theta_i, \;\;
         \frac{\partial G}{\partial \theta_{i}} =
-        \frac{a_{\rho}}{\left(i+2\right) L\mu} \left(P_{in}^{i+2} -P_{out}^{i+2} \right)+
-        \frac{b_{\rho}}{\left(i+1\right)L\mu} \left(P_{in}^{i+1} -P_{out}^{i+1} \right),
+        \frac{a_{\rho}\Omega}{\left(i+2\right) L\mu} \left(P_{in}^{i+2} -P_{out}^{i+2} \right)+
+        \frac{b_{\rho}\Omega}{\left(i+1\right)L\mu} \left(P_{in}^{i+1} -P_{out}^{i+1} \right),
     \end{eqnarray}
     %
     \begin{eqnarray}
