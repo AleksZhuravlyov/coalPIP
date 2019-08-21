@@ -1,7 +1,7 @@
 #ifndef COALPIP_CONVECTIVE_H
 #define COALPIP_CONVECTIVE_H
 
-#include <General.h>
+#include <Props.h>
 
 #include <vector>
 
@@ -10,7 +10,7 @@ class Convective {
 
 public:
 
-    explicit Convective(const General &_general);
+    explicit Convective(const Props &_props);
 
     virtual ~Convective() = default;
 
@@ -27,7 +27,7 @@ public:
     void calculateBeta(const std::vector<double> &lambda);
 
 
-    General general;
+    Props props;
 
     std::vector<double> beta;
 

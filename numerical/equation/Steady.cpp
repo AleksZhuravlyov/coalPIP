@@ -64,7 +64,7 @@ void Steady::runIterativeSteadyProcedure(const double &_pressIn,
         calculatePress();
         accuracy = calculatePressRelDiff();
         std::swap(iCurr, iPrev);
-    } while (accuracy > general.props.iterativeAccuracy);
+    } while (accuracy > props.iterativeAccuracy);
 
 }
 

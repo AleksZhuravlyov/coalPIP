@@ -5,10 +5,10 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 from output.plot_optimized_sample import plot_optimized_sample
-from analytical_steady.base import Base
+from analytical_steady.model import Model
 
 
-class SteadyAnalytical(Base):
+class SteadyAnalytical(Model):
     def __init__(s, config_file, polynomial_degree):
         super().__init__(config_file, polynomial_degree)
 

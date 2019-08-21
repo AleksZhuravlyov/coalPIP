@@ -9,7 +9,7 @@ sys.path.append(os.path.join(current_path, '../'))
 from analytical_steady.structure import Structure
 
 
-class Base(Structure):
+class Model(Structure):
     def __init__(s, config_file, polynomial_degree):
         super().__init__(config_file, polynomial_degree)
 
@@ -76,5 +76,5 @@ class Base(Structure):
 
 
 if __name__ == '__main__':
-    base = Base(config_file=sys.argv[1], polynomial_degree=3)
-    print(base)
+    model = Model(config_file=sys.argv[1], polynomial_degree=3)
+    print(model)

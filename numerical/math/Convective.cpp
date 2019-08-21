@@ -1,15 +1,15 @@
 #include <Convective.h>
 
-#include <General.h>
+#include <Props.h>
 
-Convective::Convective(const General &_general) :
-        general(_general),
-        beta(std::vector<double>(general.props.gridBlockN + 1, 0)) {}
+Convective::Convective(const Props &_props) :
+        props(_props),
+        beta(std::vector<double>(props.gridBlockN + 1, 0)) {}
 
 
 std::ostream &operator<<(std::ostream &stream,
                          const Convective &convective) {
-    stream << convective.general.props;
+    stream << convective.props;
     return stream;
 }
 
@@ -26,6 +26,6 @@ int Convective::right(const int &index) {
 void Convective::calculateBeta(const std::vector<double> &lambda) {
     for (int i = 1; i < beta.size() - 1; i++) {
         beta[i] = -(lambda[left(i)] + lambda[right(i)]) / 2;
-        beta[i] *= general.props.area / general.props.deltaLength;
+        beta[i] *= props.area / props.deltaLength;
     }
 }

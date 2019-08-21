@@ -1,7 +1,7 @@
 #ifndef COALPIP_LOCAL_H
 #define COALPIP_LOCAL_H
 
-#include <General.h>
+#include <Props.h>
 
 #include <string>
 
@@ -10,7 +10,7 @@ class Local {
 
 public:
 
-    explicit Local(const General &_general,
+    explicit Local(const Props &_props,
                    const std::vector<std::string> &thetaFiles);
 
     virtual ~Local() = default;
@@ -31,6 +31,11 @@ public:
     void loadThetaPoro();
 
 
+    double dens(const double &press);
+
+    double densDer(const double &press);
+
+
     double perm(const double &press);
 
     double poro(const double &press);
@@ -43,7 +48,7 @@ public:
     void calculateLambda(const std::vector<double> &press);
 
 
-    General general;
+    Props props;
 
     std::string thetaPermFile;
     std::string thetaPoroFile;

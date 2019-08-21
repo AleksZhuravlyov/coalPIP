@@ -3,18 +3,18 @@
 #include <fstream>
 #include <cmath>
 
-Local::Local(const General &_general,
+Local::Local(const Props &_props,
              const std::vector<std::string> &thetaFiles) :
-        general(_general),
+        props(_props),
         thetaPermFile(thetaFiles[0]),
         thetaPoroFile(thetaFiles[1]),
-        alpha(std::vector<double>(general.props.gridBlockN, 0)),
-        lambda(std::vector<double>(general.props.gridBlockN, 0)) {}
+        alpha(std::vector<double>(props.gridBlockN, 0)),
+        lambda(std::vector<double>(props.gridBlockN, 0)) {}
 
 
 std::ostream &operator<<(std::ostream &stream, const Local &local) {
 
-    stream << local.general.props;
+    stream << local.props;
     stream << "thetaPermFile " << local.thetaPermFile << std::endl;
     stream << "thetaPoroFile " << local.thetaPoroFile << std::endl;
 
@@ -62,6 +62,15 @@ void Local::loadThetaPoro() {
 }
 
 
+double Local::dens(const double &press) {
+    return props.aDens * press + props.bDens;
+}
+
+double Local::densDer(const double &press) {
+    return props.bDens;
+}
+
+
 double Local::perm(const double &press) {
     double value = 0;
     for (int i = 0; i < thetaPerm.size(); i++)
@@ -87,15 +96,14 @@ void Local::calculateAlpha(const std::vector<double> &press,
                            const double &dt) {
 
     for (int i = 0; i < alpha.size(); i++) {
-        alpha[i] = poro(press[i]) * general.densDer(press[i]);
-        alpha[i] += poroDer(press[i]) * general.dens(press[i]);
-        alpha[i] *= general.props.deltaVolume / dt;
+        alpha[i] = poro(press[i]) * densDer(press[i]);
+        alpha[i] += poroDer(press[i]) * dens(press[i]);
+        alpha[i] *= props.deltaVolume / dt;
     }
 
 }
 
 void Local::calculateLambda(const std::vector<double> &press) {
     for (int i = 0; i < lambda.size(); i++)
-        lambda[i] =
-                general.dens(press[i]) * perm(press[i]) / general.props.visc;
+        lambda[i] = dens(press[i]) * perm(press[i]) / props.visc;
 }

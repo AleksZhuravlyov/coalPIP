@@ -4,7 +4,7 @@
 #include <vector>
 #include <Eigen/Sparse>
 
-#include <General.h>
+#include <Props.h>
 #include <Local.h>
 #include <Convective.h>
 
@@ -51,7 +51,7 @@ public:
     double calculateEmpiricalRisk(const std::vector<double> &thetaPerm);
 
 
-    General general;
+    Props props;
 
     Local local;
 

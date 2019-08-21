@@ -6,10 +6,10 @@ Equation::Equation(const std::vector<double> &propsVector,
                    const std::vector<double> &_pressIn,
                    const std::vector<double> &_pressOut,
                    const std::vector<double> &_consumptionFact) :
-        general(propsVector),
-        local(general, thetaFiles),
-        convective(general),
-        dim(general.props.gridBlockN),
+        props(propsVector),
+        local(props, thetaFiles),
+        convective(props),
+        dim(props.gridBlockN),
         time(_time),
         pressIn(_pressIn),
         pressOut(_pressOut),
@@ -46,7 +46,7 @@ Equation::Equation(const std::vector<double> &propsVector,
 
 std::ostream &operator<<(std::ostream &stream,
                          const Equation &equation) {
-    stream << equation.general.props;
+    stream << equation.props;
     return stream;
 }
 

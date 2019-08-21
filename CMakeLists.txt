@@ -23,7 +23,6 @@ python_add_module(solver
         numerical/SolverWrapper.cpp
         numerical/Solver.cpp
         numerical/Props.cpp
-        numerical/math/General.cpp
         numerical/math/Local.cpp
         numerical/math/Convective.cpp
         numerical/equation/Equation.cpp
