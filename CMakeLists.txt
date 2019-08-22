@@ -13,20 +13,19 @@ find_package(Eigen3 REQUIRED)
 
 
 include_directories(
-        utilities
-        numerical
+        numerical/equation
         numerical/math
-        numerical/equation)
+        numerical/utilities)
 
 
 python_add_module(cfd
         numerical/wrapper.cpp
-        numerical/math/Props.cpp
-        numerical/math/Local.cpp
-        numerical/math/Convective.cpp
         numerical/equation/Equation.cpp
         numerical/equation/Steady.cpp
-        numerical/equation/Transient.cpp)
+        numerical/equation/Transient.cpp
+        numerical/math/Props.cpp
+        numerical/math/Local.cpp
+        numerical/math/Convective.cpp)
 
 
 target_include_directories(cfd PUBLIC
