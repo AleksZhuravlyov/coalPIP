@@ -8,7 +8,7 @@ import matplotlib as mpl
 from mpl_toolkits import mplot3d
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
 from analytical_steady.model import Model
 

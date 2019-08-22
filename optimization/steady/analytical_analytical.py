@@ -2,13 +2,13 @@ import sys
 import os
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
 from output.plot_optimized_sample import plot_optimized_sample
 from analytical_steady.model import Model
 
 
-class SteadyAnalytical(Model):
+class AnalyticalAnalytical(Model):
     def __init__(s, config_file, polynomial_degree):
         super().__init__(config_file, polynomial_degree)
 
@@ -19,12 +19,13 @@ class SteadyAnalytical(Model):
         s.calculate_G_rel_err()
 
     def plot(s):
-        plot_optimized_sample(s, title='Steady State Analytical')
+        plot_optimized_sample(s,
+                              'Analytical Steady State Analytical Optimisation')
 
 
 if __name__ == '__main__':
-    steady_analytical = SteadyAnalytical(config_file=sys.argv[1],
-                                         polynomial_degree=3)
-    print(steady_analytical)
-    steady_analytical.calculate()
-    steady_analytical.plot()
+    analytical_analytical = AnalyticalAnalytical(config_file=sys.argv[1],
+                                                 polynomial_degree=3)
+    print(analytical_analytical)
+    analytical_analytical.calculate()
+    analytical_analytical.plot()

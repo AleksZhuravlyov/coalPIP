@@ -69,7 +69,7 @@ void Steady::runIterativeSteadyProcedure(const double &_pressIn,
 }
 
 
-void Steady::calculateConsumptionSet() {
+void Steady::calculateConsumptions() {
     for (int i = 0; i < consumptionFact.size(); i++) {
         runIterativeSteadyProcedure(pressIn[i], pressOut[i]);
         consumptionCalc[i] = calculateConsumption();
@@ -77,6 +77,6 @@ void Steady::calculateConsumptionSet() {
 }
 
 void Steady::setTheta(const std::vector<double> &theta){
-    local.thetaPerm = theta;
+    setThetaPerm(theta);
 }
 

@@ -4,13 +4,13 @@ import numpy as np
 from scipy import optimize
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
 from analytical_steady.model import Model
 from output.plot_optimized_sample import plot_optimized_sample
 
 
-class SteadyScipy(Model):
+class AnalyticalScipy(Model):
     def __init__(s, config_file, polynomial_degree, theta_ini):
         super().__init__(config_file, polynomial_degree)
 
@@ -34,7 +34,8 @@ class SteadyScipy(Model):
         s.calculate_G_rel_err()
 
     def plot(s):
-        plot_optimized_sample(s, title='Steady State SciPy')
+        plot_optimized_sample(s,
+                              'Analytical Steady State SciPy Optimisation')
 
     def __str__(s):
         out_str = super().__str__()
@@ -47,8 +48,9 @@ if __name__ == '__main__':
     ini = np.zeros(degree + 1, dtype=float)
     ini[0] = 1.e-14
 
-    steady_scipy = SteadyScipy(config_file=sys.argv[1],
-                               polynomial_degree=degree, theta_ini=ini)
-    print(steady_scipy)
-    steady_scipy.calculate()
-    steady_scipy.plot()
+    analytical_scipy = AnalyticalScipy(config_file=sys.argv[1],
+                                       polynomial_degree=degree,
+                                       theta_ini=ini)
+    print(analytical_scipy)
+    analytical_scipy.calculate()
+    analytical_scipy.plot()

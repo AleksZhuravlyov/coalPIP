@@ -24,6 +24,6 @@ std::ostream &operator<<(std::ostream &stream, const Props &props) {
     stream << "gridBlockN " << props.gridBlockN << std::endl;
     stream << "deltaVolume " << props.deltaVolume << std::endl;
     stream << "deltaLength " << props.deltaLength << std::endl;
-    stream << "iterativeAccuracy " << props.iterativeAccuracy << std::endl;
+    stream << "iterativeAccuracy " << props.iterativeAccuracy;
     return stream;
 }

@@ -10,7 +10,7 @@ from input.parameters import Parameters
 from input.props import Props
 
 
-class Structure:
+class ModelFrame:
     def __init__(s, config_file, polynomial_degree):
         s.parameters = Parameters(config_file)
         s.parameters.process_steady()
@@ -46,5 +46,5 @@ class Structure:
 
 
 if __name__ == '__main__':
-    structure = Structure(config_file=sys.argv[1], polynomial_degree=3)
-    print(structure)
+    model_frame = ModelFrame(config_file=sys.argv[1], polynomial_degree=3)
+    print(model_frame)

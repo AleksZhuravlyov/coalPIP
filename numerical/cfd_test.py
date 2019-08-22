@@ -5,7 +5,7 @@ import numpy as np
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from numerical.solver import Solver
+from numerical.cfd import Steady
 from input.props import Props
 from input.parameters import Parameters
 
@@ -22,9 +22,13 @@ press_out = parameters.steady['Poutlet, Pa'].to_numpy()
 consumption = parameters.steady['Qoutlet, st. m3/s'].copy().to_numpy()
 consumption *= props.a_dens * 1.E+5 + props.b_dens
 
-solver = Solver(props_array, theta_files_array,
+steady = Steady(props_array, theta_files_array,
                 time, press_in, press_out, consumption)
+
+print(steady)
 
 theta_perm = np.loadtxt(props.theta_perm_file, dtype=float)
 
-empirical_risk = solver.test(theta_perm)
+empirical_risk = steady.calculate_empirical_risk(theta_perm)
+
+print('empirical_risk', empirical_risk)

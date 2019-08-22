@@ -91,7 +91,7 @@ double Equation::calculateConsumption() {
 double Equation::calculateEmpiricalRisk(const std::vector<double> &theta) {
 
     setTheta(theta);
-    calculateConsumptionSet();
+    calculateConsumptions();
 
     double empiricalRisk = 0;
     for (int i = 0; i < consumptionFact.size(); i++)
@@ -100,4 +100,71 @@ double Equation::calculateEmpiricalRisk(const std::vector<double> &theta) {
 
     return empiricalRisk;
 
+}
+
+
+std::vector<double> Equation::getThetaPerm() const {
+    return local.thetaPerm;
+}
+
+void Equation::setThetaPerm(const std::vector<double> &_thetaPerm) {
+    local.thetaPerm = _thetaPerm;
+}
+
+std::vector<double> Equation::getThetaPoro() const {
+    return local.thetaPoro;
+}
+
+void Equation::setThetaPoro(const std::vector<double> &_thetaPoro) {
+    local.thetaPoro = _thetaPoro;
+}
+
+
+std::vector<double> Equation::getTime() const {
+    return time;
+}
+
+std::vector<double> Equation::getPressIn() const {
+    return pressIn;
+}
+
+std::vector<double> Equation::getPressOut() const {
+    return pressOut;
+}
+
+std::vector<double> Equation::getConsumptionFact() const {
+    return consumptionFact;
+}
+
+std::vector<double> Equation::getConsumptionCalc() const {
+    return consumptionCalc;
+}
+
+std::vector<double> Equation::getPress() const {
+    return press[iCurr];
+}
+
+
+void Equation::setTime(const std::vector<double> &_time) {
+    time = _time;
+}
+
+void Equation::setPressIn(const std::vector<double> &_pressIn) {
+    pressIn = _pressIn;
+}
+
+void Equation::setPressOut(const std::vector<double> &_pressOut) {
+    pressOut = _pressOut;
+}
+
+void Equation::setConsumptionFact(const std::vector<double> &_consumptionFact) {
+    consumptionFact = _consumptionFact;
+}
+
+void Equation::setConsumptionCalc(const std::vector<double> &_consumptionCalc) {
+    consumptionCalc = _consumptionCalc;
+}
+
+void Equation::setPress(const std::vector<double> &_press) {
+    press[iCurr] = _press;
 }

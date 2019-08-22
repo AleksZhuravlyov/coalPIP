@@ -44,9 +44,9 @@ public:
 
     double calculateConsumption();
 
-    virtual void calculateConsumptionSet()  = 0;
+    virtual void calculateConsumptions() = 0;
 
-    virtual void setTheta(const std::vector<double> &theta)  = 0;
+    virtual void setTheta(const std::vector<double> &theta) = 0;
 
     double calculateEmpiricalRisk(const std::vector<double> &thetaPerm);
 
@@ -63,7 +63,6 @@ public:
     std::vector<double> pressIn;
     std::vector<double> pressOut;
     std::vector<double> consumptionFact;
-
     std::vector<double> consumptionCalc;
 
 
@@ -77,6 +76,41 @@ public:
     Vector freeVector;
 
     Vector variable;
+
+
+    std::vector<double> getThetaPerm() const;
+
+    void setThetaPerm(const std::vector<double> &_thetaPerm);
+
+    std::vector<double> getThetaPoro() const;
+
+    void setThetaPoro(const std::vector<double> &_thetaPoro);
+
+
+    std::vector<double> getTime() const;
+
+    std::vector<double> getPressIn() const;
+
+    std::vector<double> getPressOut() const;
+
+    std::vector<double> getConsumptionFact() const;
+
+    std::vector<double> getConsumptionCalc() const;
+
+    std::vector<double> getPress() const;
+
+
+    void setTime(const std::vector<double> &_time);
+
+    void setPressIn(const std::vector<double> &_pressIn);
+
+    void setPressOut(const std::vector<double> &_pressOut);
+
+    void setConsumptionFact(const std::vector<double> &_consumptionFact);
+
+    void setConsumptionCalc(const std::vector<double> &_consumptionCalc);
+
+    void setPress(const std::vector<double> &_press);
 
 };
 

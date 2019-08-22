@@ -19,10 +19,9 @@ include_directories(
         numerical/equation)
 
 
-python_add_module(solver
-        numerical/SolverWrapper.cpp
-        numerical/Solver.cpp
-        numerical/Props.cpp
+python_add_module(cfd
+        numerical/wrapper.cpp
+        numerical/math/Props.cpp
         numerical/math/Local.cpp
         numerical/math/Convective.cpp
         numerical/equation/Equation.cpp
@@ -30,12 +29,12 @@ python_add_module(solver
         numerical/equation/Transient.cpp)
 
 
-target_include_directories(solver PUBLIC
+target_include_directories(cfd PUBLIC
         ${Boost_INCLUDE_DIRS} ${PYTHON_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIRS})
 
-target_link_libraries(solver
+target_link_libraries(cfd
         ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} ${EIGEN3_LIBRARIES})
 
-set_target_properties(solver PROPERTIES
+set_target_properties(cfd PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/../numerical)
 

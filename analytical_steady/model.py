@@ -6,10 +6,10 @@ import pandas as pd
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from analytical_steady.structure import Structure
+from analytical_steady.model_frame import ModelFrame
 
 
-class Model(Structure):
+class Model(ModelFrame):
     def __init__(s, config_file, polynomial_degree):
         super().__init__(config_file, polynomial_degree)
 

@@ -13,5 +13,5 @@ Transient::Transient(const std::vector<double> &propsVector,
 
 
 void Transient::setTheta(const std::vector<double> &theta){
-    local.thetaPoro = theta;
+    setThetaPoro(theta);
 }

@@ -31,7 +31,7 @@ public:
     void runIterativeSteadyProcedure(const double &pressIn,
                                      const double &pressOut);
 
-    void calculateConsumptionSet() final;
+    void calculateConsumptions() final;
 
     void setTheta(const std::vector<double> &theta) final;
 

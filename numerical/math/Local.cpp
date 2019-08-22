@@ -14,9 +14,9 @@ Local::Local(const Props &_props,
 
 std::ostream &operator<<(std::ostream &stream, const Local &local) {
 
-    stream << local.props;
+    stream << local.props << std::endl;
     stream << "thetaPermFile " << local.thetaPermFile << std::endl;
-    stream << "thetaPoroFile " << local.thetaPoroFile << std::endl;
+    stream << "thetaPoroFile " << local.thetaPoroFile;
 
     stream << "thetaPerm";
     for (auto &&element : local.thetaPerm)
@@ -107,3 +107,5 @@ void Local::calculateLambda(const std::vector<double> &press) {
     for (int i = 0; i < lambda.size(); i++)
         lambda[i] = dens(press[i]) * perm(press[i]) / props.visc;
 }
+
+
