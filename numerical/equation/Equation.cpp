@@ -19,6 +19,7 @@ Equation::Equation(const std::vector<double> &propsVector,
         iPrev(1),
         matrix(dim, dim),
         freeVector(dim),
+        guessVector(dim),
         variable(dim) {
 
 
@@ -38,6 +39,7 @@ Equation::Equation(const std::vector<double> &propsVector,
 
     for (int i = 0; i < dim; i++) {
         freeVector[i] = 0;
+        guessVector[i] = 0;
         variable[i] = 0;
     }
 
@@ -50,6 +52,9 @@ std::ostream &operator<<(std::ostream &stream,
     return stream;
 }
 
+void Equation::calculateAlpha(const double &dt) {
+    local.calculateAlpha(press[iPrev], dt);
+}
 
 void Equation::calculateLambda() {
     local.calculateLambda(press[iPrev]);
@@ -61,12 +66,21 @@ void Equation::calculateBeta() {
 }
 
 
+void Equation::calculateGuessVector() {
+    for (int i = 0; i < dim; i++)
+        guessVector[i] = press[iPrev][i];
+}
+
+
 void Equation::calculatePress() {
 
-    SparseLU sparseLU;
+    BiCGSTAB biCGSTAB;
 
-    sparseLU.compute(matrix);
-    variable = sparseLU.solve(freeVector);
+    biCGSTAB.compute(matrix);
+
+    calculateGuessVector();
+
+    variable = biCGSTAB.solveWithGuess(freeVector, guessVector);
 
     for (int i = 0; i < dim; i++)
         press[iCurr][i] = variable[i];
@@ -84,7 +98,7 @@ double Equation::calculatePressRelDiff() {
 double Equation::calculateConsumption() {
     int i = dim - 1;
     return convective.beta[Local::left(i)] *
-           (press[iPrev][i] - press[iPrev][i - 1]);
+           (press[iCurr][i] - press[iCurr][i - 1]);
 }
 
 

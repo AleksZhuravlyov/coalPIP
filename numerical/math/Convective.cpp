@@ -25,7 +25,7 @@ int Convective::right(const int &index) {
 
 void Convective::calculateBeta(const std::vector<double> &lambda) {
     for (int i = 1; i < beta.size() - 1; i++) {
-        beta[i] = -(lambda[left(i)] + lambda[right(i)]) / 2;
+        beta[i] = (lambda[left(i)] + lambda[right(i)]) / 2;
         beta[i] *= props.area / props.deltaLength;
     }
 }

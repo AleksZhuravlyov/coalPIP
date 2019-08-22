@@ -8,7 +8,7 @@ class Props {
 
 public:
 
-    explicit Props(const std::vector<double> &propsVector);
+    explicit Props(const std::vector<double> &_propsVector);
 
     virtual ~Props() {}
 
@@ -24,6 +24,15 @@ public:
     double deltaVolume;
     double deltaLength;
     double iterativeAccuracy;
+
+    std::vector<double> getPropsVector() const;
+
+
+private:
+
+    std::vector<double> propsVector;
+public:
+
 
 };
 

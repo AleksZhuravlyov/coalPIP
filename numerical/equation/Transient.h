@@ -18,6 +18,23 @@ public:
 
     void setTheta(const std::vector<double> &theta) final;
 
+
+    void calculateInitPress();
+
+    void calculateMatrix() final;
+
+    void calculateFreeVector(const double &_pressIn,
+                             const double &_pressOut) final;
+
+    void cfdProcedure(const double &_pressIn,
+                      const double &_pressOut) final;
+
+    void calculateConsumptions() final {}
+
+private:
+
+    double dt;
+
 };
 
 

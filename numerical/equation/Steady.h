@@ -20,16 +20,14 @@ public:
     void calculateGuessPress(const double &pressIn,
                              const double &pressOut);
 
-    void calculateSteadyMatrix();
+    void calculateMatrix() final;
 
-    void calculateSteadyFreeVector(const double &pressIn,
-                                   const double &pressOut);
-
-
+    void calculateFreeVector(const double &_pressIn,
+                             const double &_pressOut) final;
 
 
-    void runIterativeSteadyProcedure(const double &pressIn,
-                                     const double &pressOut);
+    void cfdProcedure(const double &_pressIn,
+                      const double &_pressOut) final;
 
     void calculateConsumptions() final;
 

@@ -4,12 +4,13 @@
 #include <cmath>
 
 Local::Local(const Props &_props,
-             const std::vector<std::string> &thetaFiles) :
+             const std::vector<std::string> &_thetaFiles) :
         props(_props),
-        thetaPermFile(thetaFiles[0]),
-        thetaPoroFile(thetaFiles[1]),
+        thetaPermFile(_thetaFiles[0]),
+        thetaPoroFile(_thetaFiles[1]),
         alpha(std::vector<double>(props.gridBlockN, 0)),
-        lambda(std::vector<double>(props.gridBlockN, 0)) {}
+        lambda(std::vector<double>(props.gridBlockN, 0)),
+        thetaFiles(_thetaFiles) {}
 
 
 std::ostream &operator<<(std::ostream &stream, const Local &local) {
@@ -106,6 +107,10 @@ void Local::calculateAlpha(const std::vector<double> &press,
 void Local::calculateLambda(const std::vector<double> &press) {
     for (int i = 0; i < lambda.size(); i++)
         lambda[i] = dens(press[i]) * perm(press[i]) / props.visc;
+}
+
+std::vector<std::string> Local::getThetaFiles() const {
+    return thetaFiles;
 }
 
 

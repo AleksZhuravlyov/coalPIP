@@ -9,12 +9,12 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 
-def plot_optimized_sample(base, title='title',
+def plot_optimized_sample(model, title='title',
                           y_min=None, y_max=None, y2_min=None, y2_max=None):
-    data_sample = base.return_optimized_sample()
-    theta = base.theta
-    dens_a = base.props.a_dens
-    dens_b = base.props.b_dens
+    data_sample = model.return_optimized_sample()
+    theta = model.theta
+    dens_a = model.props.a_dens
+    dens_b = model.props.b_dens
 
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
 

@@ -13,7 +13,7 @@ typedef Eigen::Triplet<double> Triplet;
 typedef Eigen::SparseMatrix<double, Eigen::RowMajor> Matrix;
 typedef Matrix::InnerIterator MatrixIterator;
 typedef Eigen::VectorXd Vector;
-typedef Eigen::SparseLU<Eigen::SparseMatrix<double>> SparseLU;
+typedef Eigen::BiCGSTAB<Eigen::SparseMatrix<double>> BiCGSTAB;
 
 
 class Equation {
@@ -33,10 +33,21 @@ public:
     friend std::ostream &operator<<(std::ostream &stream,
                                     const Equation &equation);
 
+    void calculateAlpha(const double &dt);
 
     void calculateLambda();
 
     void calculateBeta();
+
+    virtual void calculateMatrix() = 0;
+
+    void calculateGuessVector();
+
+    virtual void calculateFreeVector(const double &_pressIn,
+                                     const double &_pressOut) = 0;
+
+    virtual void cfdProcedure(const double &_pressIn,
+                              const double &_pressOut) = 0;
 
     void calculatePress();
 
@@ -74,6 +85,8 @@ public:
     Matrix matrix;
 
     Vector freeVector;
+
+    Vector guessVector;
 
     Vector variable;
 

@@ -16,14 +16,12 @@ Steady::Steady(const std::vector<double> &propsVector,
 void Steady::calculateGuessPress(const double &pressIn,
                                  const double &pressOut) {
     for (int i = 0; i < dim; i++)
-        press[iPrev][i] = pressIn * (dim - 1 - i) / (dim - 1) +
+        press[iCurr][i] = pressIn * (dim - 1 - i) / (dim - 1) +
                           pressOut * i / (dim - 1);
 }
 
 
-void Steady::calculateSteadyMatrix() {
-
-    calculateBeta();
+void Steady::calculateMatrix() {
 
     for (int i = 1; i < matrix.outerSize() - 1; ++i) {
 
@@ -41,33 +39,32 @@ void Steady::calculateSteadyMatrix() {
 
 }
 
-void Steady::calculateSteadyFreeVector(const double &pressIn,
-                                       const double &pressOut) {
-    freeVector[0] = pressIn;
+void Steady::calculateFreeVector(const double &_pressIn,
+                                 const double &_pressOut) {
+    freeVector[0] = _pressIn;
     for (int i = 1; i < dim - 1; i++)
         freeVector[i] = 0;
-    freeVector[dim - 1] = pressOut;
+    freeVector[dim - 1] = _pressOut;
 }
 
 
-void Steady::runIterativeSteadyProcedure(const double &_pressIn,
-                                         const double &_pressOut) {
-    calculateSteadyFreeVector(_pressIn, _pressOut);
+void Steady::cfdProcedure(const double &_pressIn,
+                          const double &_pressOut) {
     calculateGuessPress(_pressIn, _pressOut);
-    double accuracy = 0;
+    calculateFreeVector(_pressIn, _pressOut);
     do {
-        calculateSteadyMatrix();
-        calculatePress();
-        accuracy = calculatePressRelDiff();
         std::swap(iCurr, iPrev);
-    } while (accuracy > props.iterativeAccuracy);
+        calculateBeta();
+        calculateMatrix();
+        calculatePress();
+    } while (calculatePressRelDiff() > props.iterativeAccuracy);
 
 }
 
 
 void Steady::calculateConsumptions() {
     for (int i = 0; i < consumptionFact.size(); i++) {
-        runIterativeSteadyProcedure(pressIn[i], pressOut[i]);
+        cfdProcedure(pressIn[i], pressOut[i]);
         consumptionCalc[i] = calculateConsumption();
     }
 }

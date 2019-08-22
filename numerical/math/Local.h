@@ -11,7 +11,7 @@ class Local {
 public:
 
     explicit Local(const Props &_props,
-                   const std::vector<std::string> &thetaFiles);
+                   const std::vector<std::string> &_thetaFiles);
 
     virtual ~Local() = default;
 
@@ -60,6 +60,12 @@ public:
     std::vector<double> lambda;
 
 
+    std::vector<std::string> getThetaFiles() const;
+
+
+private:
+
+    std::vector<std::string> thetaFiles;
 
 
 };

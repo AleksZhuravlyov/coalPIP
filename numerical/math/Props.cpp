@@ -3,16 +3,17 @@
 #include <vector>
 
 
-Props::Props(const std::vector<double> &propsVector) :
-        aDens(propsVector[0]),
-        bDens(propsVector[1]),
-        visc(propsVector[2]),
-        length(propsVector[3]),
-        area(propsVector[4]),
-        gridBlockN(propsVector[5]),
-        deltaVolume(propsVector[6]),
-        deltaLength(propsVector[7]),
-        iterativeAccuracy(propsVector[8]){}
+Props::Props(const std::vector<double> &_propsVector) :
+        aDens(_propsVector[0]),
+        bDens(_propsVector[1]),
+        visc(_propsVector[2]),
+        length(_propsVector[3]),
+        area(_propsVector[4]),
+        gridBlockN(_propsVector[5]),
+        deltaVolume(_propsVector[6]),
+        deltaLength(_propsVector[7]),
+        iterativeAccuracy(_propsVector[8]),
+        propsVector(_propsVector) {}
 
 
 std::ostream &operator<<(std::ostream &stream, const Props &props) {
@@ -26,4 +27,8 @@ std::ostream &operator<<(std::ostream &stream, const Props &props) {
     stream << "deltaLength " << props.deltaLength << std::endl;
     stream << "iterativeAccuracy " << props.iterativeAccuracy;
     return stream;
+}
+
+std::vector<double> Props::getPropsVector() const {
+    return propsVector;
 }
