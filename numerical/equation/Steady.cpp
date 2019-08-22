@@ -13,12 +13,11 @@ Steady::Steady(const std::vector<double> &propsVector,
                  time, pressIn, pressOut, consumption) {}
 
 
-void Steady::calculateLinearPressDistrib(const double &pressIn,
-                                         const double &pressOut) {
+void Steady::calculateGuessPress(const double &pressIn,
+                                 const double &pressOut) {
     for (int i = 0; i < dim; i++)
         press[iPrev][i] = pressIn * (dim - 1 - i) / (dim - 1) +
                           pressOut * i / (dim - 1);
-
 }
 
 
@@ -51,13 +50,10 @@ void Steady::calculateSteadyFreeVector(const double &pressIn,
 }
 
 
-
-
-
 void Steady::runIterativeSteadyProcedure(const double &_pressIn,
                                          const double &_pressOut) {
     calculateSteadyFreeVector(_pressIn, _pressOut);
-    calculateLinearPressDistrib(_pressIn, _pressOut);
+    calculateGuessPress(_pressIn, _pressOut);
     double accuracy = 0;
     do {
         calculateSteadyMatrix();
@@ -76,7 +72,7 @@ void Steady::calculateConsumptions() {
     }
 }
 
-void Steady::setTheta(const std::vector<double> &theta){
+void Steady::setTheta(const std::vector<double> &theta) {
     setThetaPerm(theta);
 }
 

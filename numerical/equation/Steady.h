@@ -17,8 +17,8 @@ public:
 
     ~Steady() override = default;
 
-    void calculateLinearPressDistrib(const double &pressIn,
-                                     const double &pressOut);
+    void calculateGuessPress(const double &pressIn,
+                             const double &pressOut);
 
     void calculateSteadyMatrix();
 
