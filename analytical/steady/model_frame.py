@@ -4,10 +4,10 @@ import configparser
 import numpy as np
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
-from input.parameters import Parameters
-from input.props import Props
+from input import Parameters
+from input import Props
 
 
 class ModelFrame:

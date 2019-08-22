@@ -10,7 +10,7 @@ from mpl_toolkits import mplot3d
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
-from analytical_steady.model import Model
+from analytical.steady import Model
 
 # steady_base.calculate_leastsq_problem()
 # steady_base.calculate_G_using_theta()

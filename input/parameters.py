@@ -1,17 +1,29 @@
 import sys
 import os
 import pandas as pd
+import configparser
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from input.plot_parameters import plot_parameters
-from input.parameters_frame import ParametersFrame
+from input import plot_parameters
 
 
-class Parameters(ParametersFrame):
+class Parameters:
     def __init__(s, config_file):
-        super().__init__(config_file)
+        s.config = configparser.ConfigParser()
+        s.config.read(config_file)
+
+        s.parameters_file = str(s.config.get('Main', 'parameters_file'))
+
+        s.origin = None
+        s.entire = None
+        s.steady = None
+        s.transient = None
+
+    def __str__(s):
+        out_str = 'parameters_file ' + str(s.parameters_file)
+        return out_str
 
     def process_origin(s):
         s.origin = pd.read_csv(s.parameters_file, index_col='time',

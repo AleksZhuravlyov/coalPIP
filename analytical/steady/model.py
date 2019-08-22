@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(current_path, '../'))
+sys.path.append(os.path.join(current_path, '../../'))
 
-from analytical_steady.model_frame import ModelFrame
+from analytical.steady.model_frame import ModelFrame
 
 
 class Model(ModelFrame):

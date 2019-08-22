@@ -5,9 +5,9 @@ import numpy as np
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
-from numerical.cfd import Steady
-from input.props import Props
-from input.parameters import Parameters
+from numerical import Steady
+from input import Props
+from input import Parameters
 
 props = Props(config_file=sys.argv[1])
 props_array = props.get_props_array()

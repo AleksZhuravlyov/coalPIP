@@ -6,8 +6,8 @@ from scipy import optimize
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
-from analytical_steady.model import Model
-from output.plot_optimized_sample import plot_optimized_sample
+from analytical.steady import Model
+from output import plot_optimized_sample
 
 
 class AnalyticalScipy(Model):
