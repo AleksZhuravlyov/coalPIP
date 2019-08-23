@@ -9,12 +9,11 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
 
 
-def plot_optimized_sample(model, title='title',
+def plot_optimized_sample(data_sample, theta, props,
+                          title='title', theta_type='perm',
                           y_min=None, y_max=None, y2_min=None, y2_max=None):
-    data_sample = model.return_optimized_sample()
-    theta = model.theta
-    dens_a = model.props.a_dens
-    dens_b = model.props.b_dens
+    dens_a = props.a_dens
+    dens_b = props.b_dens
 
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
 
@@ -32,10 +31,10 @@ def plot_optimized_sample(model, title='title',
     press_max = data_sample['Pinlet, Pa'].max()
     press_step = (press_max - press_min) / 100
     press = np.arange(press_min, press_max, press_step)
-    perm = np.zeros(press.shape, dtype=float)
+    value = np.zeros(press.shape, dtype=float)
     for i in range(len(theta)):
-        perm += np.power(press, i) * theta[i]
-    perm_curve = axes[1].plot(press, perm, label='permeability')
+        value += np.power(press, i) * theta[i]
+    perm_curve = axes[1].plot(press, value, label=theta_type)
 
     dens = dens_a * press + dens_b
     ax1_2 = axes[1].twinx()
@@ -56,7 +55,11 @@ def plot_optimized_sample(model, title='title',
 
     axes[0].set_ylabel('consumption, m3/s')
     ax0_2.set_ylabel('pressure, Pa')
-    axes[1].set_ylabel('permeability, m2')
+    if theta_type == 'perm':
+        axes[1].set_ylabel('permeability, m2')
+    elif theta_type == 'poro':
+        axes[1].set_ylabel('porosity')
+
     axes[1].set_xlabel('pressure, Pa')
     ax1_2.set_ylabel('density, kg/m3')
 

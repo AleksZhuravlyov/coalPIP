@@ -15,6 +15,7 @@ Equation::Equation(const std::vector<double> &propsVector,
         pressOut(_pressOut),
         consumptionFact(_consumptionFact),
         consumptionCalc(_consumptionFact.size(), 0),
+        consumptionRelErr(_consumptionFact.size(), 0),
         iCurr(0),
         iPrev(1),
         matrix(dim, dim),
@@ -53,11 +54,11 @@ std::ostream &operator<<(std::ostream &stream,
 }
 
 
-void Equation::loadThetaPerm(){
+void Equation::loadThetaPerm() {
     local.loadThetaPerm();
 }
 
-void Equation::loadThetaPoro(){
+void Equation::loadThetaPoro() {
     local.loadThetaPoro();
 }
 
@@ -109,16 +110,20 @@ double Equation::calculateConsumption() {
            (press[iCurr][i] - press[iCurr][i - 1]);
 }
 
+void Equation::calculateConsumptionRelErr() {
+    for (int i = 0; i < consumptionFact.size(); i++)
+        consumptionRelErr[i] = fabs(consumptionFact[i] - consumptionCalc[i]) /
+                               consumptionFact[i];
+}
+
 
 double Equation::calculateEmpiricalRisk(const std::vector<double> &theta) {
 
     setTheta(theta);
     calculateConsumptions();
-
     double empiricalRisk = 0;
-    for (int i = 0; i < consumptionFact.size(); i++)
-        empiricalRisk += fabs(consumptionFact[i] - consumptionCalc[i]) /
-                         consumptionFact[i] / consumptionFact.size();
+    for (int i = 0; i < consumptionRelErr.size(); i++)
+        empiricalRisk += consumptionRelErr[i] / consumptionRelErr.size();
 
     return empiricalRisk;
 
@@ -189,4 +194,12 @@ void Equation::setConsumptionCalc(const std::vector<double> &_consumptionCalc) {
 
 void Equation::setPress(const std::vector<double> &_press) {
     press[iCurr] = _press;
+}
+
+std::vector<double> Equation::getConsumptionRelErr() const {
+    return consumptionRelErr;
+}
+
+void Equation::setConsumptionRelErr(const std::vector<double> &_consumptionRelErr) {
+    consumptionRelErr = _consumptionRelErr;
 }

@@ -7,6 +7,7 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../../'))
 
 from analytical.steady.model_frame import ModelFrame
+from output import optimized_df
 
 
 class Model(ModelFrame):
@@ -56,23 +57,11 @@ class Model(ModelFrame):
         s.theta_path.append(theta)
         return s.G_rel_err.mean(axis=0)
 
-    def return_optimized_sample(s):
-        a_dens = s.props.a_dens
-        b_dens = s.props.b_dens
-        time_index = s.parameters.steady.index
-        P_in = np.array(s.parameters.steady['Pinlet, Pa']).copy()
-        P_out = np.array(s.parameters.steady['Poutlet, Pa']).copy()
-
-        optimized_sample = pd.DataFrame(time_index, dtype=float)
-        Q_fact = s.G_fact.copy() / (a_dens * 1.E+5 + b_dens)
-        optimized_sample['Qoutlet (fact), st. m3/s'] = Q_fact
-        Q_calc = s.G_calc.copy() / (a_dens * 1.E+5 + b_dens)
-        optimized_sample['Qoutlet (calc), st. m3/s'] = Q_calc
-        optimized_sample['Pinlet, Pa'] = P_in
-        optimized_sample['Poutlet, Pa'] = P_out
-        optimized_sample['Gerror'] = s.G_rel_err.copy()
-        optimized_sample.index.name = 'time, s'
-        return optimized_sample
+    def return_optimized_case(s):
+        return optimized_df(s.props, s.parameters.steady.index,
+                            np.array(s.parameters.steady['Pinlet, Pa']),
+                            np.array(s.parameters.steady['Poutlet, Pa']),
+                            s.G_fact, s.G_calc, s.G_rel_err)
 
 
 if __name__ == '__main__':

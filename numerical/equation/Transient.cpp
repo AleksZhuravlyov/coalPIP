@@ -81,6 +81,7 @@ void Transient::calculateConsumptions() {
         cfdProcedure(pressIn[i], pressOut[i]);
         consumptionCalc[i] = calculateConsumption();
     }
+    calculateConsumptionRelErr();
 }
 
 double Transient::getDt() const {

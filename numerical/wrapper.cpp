@@ -48,6 +48,10 @@ BOOST_PYTHON_MODULE (cfd) {
             .add_property("press",
                           &Steady::getPress,
                           &Steady::setPress)
+            .add_property("consumption_rel_err",
+                          &Steady::getConsumptionRelErr,
+                          &Steady::setConsumptionRelErr)
+
 
             .def("load_theta_perm",
                  &Steady::loadThetaPerm)
@@ -99,6 +103,9 @@ BOOST_PYTHON_MODULE (cfd) {
             .add_property("press",
                           &Transient::getPress,
                           &Transient::setPress)
+            .add_property("consumption_rel_err",
+                          &Steady::getConsumptionRelErr,
+                          &Steady::setConsumptionRelErr)
             .add_property("dt",
                           &Transient::getDt,
                           &Transient::setDt)

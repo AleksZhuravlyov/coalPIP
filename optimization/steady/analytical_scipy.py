@@ -14,19 +14,10 @@ class AnalyticalScipy(Model):
     def __init__(s, config_file, polynomial_degree, theta_ini):
         super().__init__(config_file, polynomial_degree)
 
-        s.__theta_ini = None
         s.theta_ini = theta_ini
 
-    @property
-    def theta_ini(s):
-        return s.__theta_ini
-
-    @theta_ini.setter
-    def theta_ini(s, theta_ini):
-        s.__theta_ini = np.array(theta_ini, dtype=float)
-
     def calculate(s):
-        optimization = optimize.minimize(s.empirical_risk, s.__theta_ini,
+        optimization = optimize.minimize(s.empirical_risk, s.theta_ini,
                                          method="Nelder-Mead")
         s.theta = optimization.x
         s.save_theta()
@@ -34,7 +25,8 @@ class AnalyticalScipy(Model):
         s.calculate_G_rel_err()
 
     def plot(s):
-        plot_optimized_sample(s,
+        data_sample = s.return_optimized_case()
+        plot_optimized_sample(data_sample, s.theta, s.props,
                               'Analytical Steady State SciPy Optimisation')
 
     def __str__(s):

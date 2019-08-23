@@ -68,6 +68,7 @@ void Steady::calculateConsumptions() {
         cfdProcedure(pressIn[i], pressOut[i]);
         consumptionCalc[i] = calculateConsumption();
     }
+    calculateConsumptionRelErr();
 }
 
 void Steady::setTheta(const std::vector<double> &theta) {

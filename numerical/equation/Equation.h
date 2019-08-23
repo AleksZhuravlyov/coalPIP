@@ -59,6 +59,8 @@ public:
 
     double calculateConsumption();
 
+    void calculateConsumptionRelErr();
+
     virtual void calculateConsumptions() = 0;
 
     virtual void setTheta(const std::vector<double> &theta) = 0;
@@ -79,6 +81,7 @@ public:
     std::vector<double> pressOut;
     std::vector<double> consumptionFact;
     std::vector<double> consumptionCalc;
+    std::vector<double> consumptionRelErr;
 
 
     std::vector<std::vector<double>> press;
@@ -93,6 +96,11 @@ public:
     Vector guessVector;
 
     Vector variable;
+
+
+    std::vector<double> getConsumptionRelErr() const;
+
+    void setConsumptionRelErr(const std::vector<double> &consumptionRelErr);
 
 
     std::vector<double> getThetaPerm() const;

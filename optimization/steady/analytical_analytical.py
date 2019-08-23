@@ -19,7 +19,8 @@ class AnalyticalAnalytical(Model):
         s.calculate_G_rel_err()
 
     def plot(s):
-        plot_optimized_sample(s,
+        data_sample = s.return_optimized_case()
+        plot_optimized_sample(data_sample, s.theta, s.props,
                               'Analytical Steady State Analytical Optimisation')
 
 
