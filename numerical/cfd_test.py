@@ -2,6 +2,7 @@ import sys
 import os
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(current_path, '../'))
@@ -49,3 +50,5 @@ transient.load_theta_poro()
 transient.calculate_consumptions()
 pd.DataFrame({'consumption_fact': transient.consumption_fact,
               'consumption_calc': transient.consumption_calc}).plot()
+
+plt.show()
