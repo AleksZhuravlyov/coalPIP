@@ -62,8 +62,7 @@ class NumericalScipy:
                               theta_type='poro')
 
     def __str__(s):
-        out_str = super().__str__()
-        out_str += '\ntheta_ini ' + str(s.theta_ini)
+        out_str = '\ntheta_ini ' + str(s.theta_ini)
         return out_str
 
 
@@ -75,6 +74,5 @@ if __name__ == '__main__':
     numerical_scipy = NumericalScipy(config_file=sys.argv[1],
                                      polynomial_degree=degree,
                                      theta_ini=ini)
-    print(numerical_scipy)
     numerical_scipy.calculate()
     numerical_scipy.plot()

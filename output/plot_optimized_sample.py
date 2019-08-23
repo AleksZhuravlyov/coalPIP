@@ -51,7 +51,10 @@ def plot_optimized_sample(data_sample, theta, props,
 
     fig.suptitle(title)
     axes[0].set_title('Consumptions and Pressures')
-    axes[1].set_title('Permeability and Density')
+    if theta_type == 'perm':
+        axes[1].set_title('Permeability and Density')
+    elif theta_type == 'poro':
+        axes[1].set_title('Porosity and Density')
 
     axes[0].set_ylabel('consumption, m3/s')
     ax0_2.set_ylabel('pressure, Pa')
