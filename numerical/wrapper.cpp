@@ -8,14 +8,6 @@
 
 namespace p = boost::python;
 
-
-template<class T>
-std::string __str__(T const &t) {
-    std::stringstream stream;
-    stream << t;
-    return stream.str();
-}
-
 BOOST_PYTHON_MODULE (cfd) {
 
     providePythonThings();
@@ -33,13 +25,11 @@ BOOST_PYTHON_MODULE (cfd) {
                                       "press_in",
                                       "press_out",
                                       "consumption")))
-
             .def("__str__", __str__<Steady>)
 
             .add_property("theta_perm",
                           &Steady::getThetaPerm,
                           &Steady::setThetaPerm)
-
             .add_property("time",
                           &Steady::getTime,
                           &Steady::setTime)
@@ -83,7 +73,6 @@ BOOST_PYTHON_MODULE (cfd) {
                                          "press_in",
                                          "press_out",
                                          "consumption")))
-
             .def("__str__", __str__<Transient>)
 
             .add_property("theta_perm",
@@ -92,7 +81,6 @@ BOOST_PYTHON_MODULE (cfd) {
             .add_property("theta_poro",
                           &Transient::getThetaPoro,
                           &Transient::setThetaPoro)
-
             .add_property("time",
                           &Transient::getTime,
                           &Transient::setTime)
@@ -116,21 +104,11 @@ BOOST_PYTHON_MODULE (cfd) {
                           &Transient::setDt)
 
 
-            .def("calculate_init_press",
-                 &Transient::calculateInitPress)
-
-            .def("calculate_matrix",
-                 &Transient::calculateMatrix)
-
-            .def("cfd_procedure",
-                 &Transient::cfdProcedure)
-
             .def("load_theta_perm",
                  &Transient::loadThetaPerm)
 
             .def("load_theta_poro",
                  &Transient::loadThetaPoro)
-
 
             .def("calculate_consumptions",
                  &Transient::calculateConsumptions)

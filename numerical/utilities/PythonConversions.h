@@ -79,4 +79,12 @@ void providePythonThings() {
 }
 
 
+template<class T>
+std::string __str__(T const &t) {
+    std::stringstream stream;
+    stream << t;
+    return stream.str();
+}
+
+
 #endif // PYTHONCONVERSIONS_H
