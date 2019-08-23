@@ -52,6 +52,16 @@ std::ostream &operator<<(std::ostream &stream,
     return stream;
 }
 
+
+void Equation::loadThetaPerm(){
+    local.loadThetaPerm();
+}
+
+void Equation::loadThetaPoro(){
+    local.loadThetaPoro();
+}
+
+
 void Equation::calculateAlpha(const double &dt) {
     local.calculateAlpha(press[iPrev], dt);
 }
@@ -78,8 +88,6 @@ void Equation::calculatePress() {
 
     biCGSTAB.compute(matrix);
 
-    calculateGuessVector();
-
     variable = biCGSTAB.solveWithGuess(freeVector, guessVector);
 
     for (int i = 0; i < dim; i++)
@@ -97,7 +105,7 @@ double Equation::calculatePressRelDiff() {
 
 double Equation::calculateConsumption() {
     int i = dim - 1;
-    return convective.beta[Local::left(i)] *
+    return -convective.beta[Local::left(i)] *
            (press[iCurr][i] - press[iCurr][i - 1]);
 }
 

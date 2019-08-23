@@ -100,6 +100,10 @@ class Parameters:
 
 if __name__ == '__main__':
     parameters = Parameters(config_file=sys.argv[1])
+    parameters.process_entire()
+    parameters.plot('entire')
     parameters.process_steady()
     parameters.plot('steady')
+    parameters.process_transient()
+    parameters.plot('transient')
     print(parameters)

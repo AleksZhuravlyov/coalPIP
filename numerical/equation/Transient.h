@@ -29,10 +29,14 @@ public:
     void cfdProcedure(const double &_pressIn,
                       const double &_pressOut) final;
 
-    void calculateConsumptions() final {}
+    void calculateConsumptions() final;
+
+
+    double getDt() const;
+
+    void setDt(const double &_dt);
 
 private:
-
     double dt;
 
 };

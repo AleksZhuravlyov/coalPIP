@@ -55,6 +55,7 @@ void Steady::cfdProcedure(const double &_pressIn,
     do {
         std::swap(iCurr, iPrev);
         calculateBeta();
+        calculateGuessVector();
         calculateMatrix();
         calculatePress();
     } while (calculatePressRelDiff() > props.iterativeAccuracy);

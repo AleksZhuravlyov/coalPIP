@@ -68,7 +68,7 @@ double Local::dens(const double &press) {
 }
 
 double Local::densDer(const double &press) {
-    return props.bDens;
+    return props.aDens;
 }
 
 
@@ -95,13 +95,11 @@ double Local::poroDer(const double &press) {
 
 void Local::calculateAlpha(const std::vector<double> &press,
                            const double &dt) {
-
     for (int i = 0; i < alpha.size(); i++) {
         alpha[i] = poro(press[i]) * densDer(press[i]);
         alpha[i] += poroDer(press[i]) * dens(press[i]);
         alpha[i] *= props.deltaVolume / dt;
     }
-
 }
 
 void Local::calculateLambda(const std::vector<double> &press) {

@@ -33,6 +33,10 @@ public:
     friend std::ostream &operator<<(std::ostream &stream,
                                     const Equation &equation);
 
+    void loadThetaPerm();
+
+    void loadThetaPoro();
+
     void calculateAlpha(const double &dt);
 
     void calculateLambda();

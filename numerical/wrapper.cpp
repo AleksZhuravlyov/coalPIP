@@ -59,6 +59,8 @@ BOOST_PYTHON_MODULE (cfd) {
                           &Steady::getPress,
                           &Steady::setPress)
 
+            .def("load_theta_perm",
+                 &Steady::loadThetaPerm)
 
             .def("calculate_consumptions",
                  &Steady::calculateConsumptions)
@@ -109,6 +111,9 @@ BOOST_PYTHON_MODULE (cfd) {
             .add_property("press",
                           &Transient::getPress,
                           &Transient::setPress)
+            .add_property("dt",
+                          &Transient::getDt,
+                          &Transient::setDt)
 
 
             .def("calculate_init_press",
@@ -119,6 +124,12 @@ BOOST_PYTHON_MODULE (cfd) {
 
             .def("cfd_procedure",
                  &Transient::cfdProcedure)
+
+            .def("load_theta_perm",
+                 &Transient::loadThetaPerm)
+
+            .def("load_theta_poro",
+                 &Transient::loadThetaPoro)
 
 
             .def("calculate_consumptions",

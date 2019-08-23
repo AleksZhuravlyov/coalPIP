@@ -9,10 +9,7 @@ Transient::Transient(const std::vector<double> &propsVector,
                      const std::vector<double> &consumption) :
         Equation(propsVector, thetaFiles,
                  time, pressIn, pressOut, consumption),
-        dt(1) {
-    local.loadThetaPerm();
-    local.loadThetaPoro();
-}
+        dt(1) {}
 
 
 void Transient::setTheta(const std::vector<double> &theta) {
@@ -37,14 +34,12 @@ void Transient::calculateInitPress() {
 }
 
 void Transient::calculateMatrix() {
-
     MatrixIterator(matrix, 0).valueRef() = local.alpha[0];
     for (int i = 1; i < dim - 1; ++i) {
         MatrixIterator it(matrix, i);
         double &betaLeft = convective.beta[Local::left(i)];
         double &betaRight = convective.beta[Local::right(i)];
         double &alpha = local.alpha[i];
-
         it.valueRef() = -betaLeft;
         ++it;
         it.valueRef() = alpha + betaLeft + betaRight;
@@ -52,7 +47,6 @@ void Transient::calculateMatrix() {
         it.valueRef() = -betaRight;
     }
     MatrixIterator(matrix, dim - 1).valueRef() = local.alpha[dim - 1];
-
 }
 
 
@@ -67,22 +61,32 @@ void Transient::calculateFreeVector(const double &_pressIn,
 
 void Transient::cfdProcedure(const double &_pressIn,
                              const double &_pressOut) {
-
-    calculateInitPress();
-
     std::swap(iCurr, iPrev);
-
     calculateAlpha(dt);
-
     calculateBeta();
-
+    calculateGuessVector();
     calculateMatrix();
-
     calculateFreeVector(_pressIn, _pressOut);
-
     calculatePress();
-
-    std::cout << "consumptionCalc " << calculateConsumption() << std::endl;
-
 }
 
+void Transient::calculateConsumptions() {
+    calculateInitPress();
+    std::swap(iCurr, iPrev);
+    calculateBeta();
+    std::swap(iCurr, iPrev);
+    consumptionCalc[0] = calculateConsumption();
+    for (int i = 1; i < consumptionFact.size(); i++) {
+        dt = time[i] - time[i - 1];
+        cfdProcedure(pressIn[i], pressOut[i]);
+        consumptionCalc[i] = calculateConsumption();
+    }
+}
+
+double Transient::getDt() const {
+    return dt;
+}
+
+void Transient::setDt(const double &_dt) {
+    dt = _dt;
+}
