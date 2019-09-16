@@ -64,3 +64,4 @@ class Props:
 if __name__ == '__main__':
     props = Props(config_file=sys.argv[1])
     print(props)
+

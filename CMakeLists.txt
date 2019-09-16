@@ -4,10 +4,10 @@ project(coalPIP)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
 find_package(PythonLibs 3.7 REQUIRED)
 
-find_package(Boost COMPONENTS python37 numpy37 REQUIRED)
+set(Boost_NO_BOOST_CMAKE TRUE)
+find_package(Boost REQUIRED COMPONENTS python37 numpy37)
 
 find_package(Eigen3 REQUIRED)
 
