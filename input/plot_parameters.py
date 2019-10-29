@@ -7,11 +7,12 @@ sys.path.append(os.path.join(current_path, '../'))
 
 
 def plot_parameters(data_sample, title='parameters', y_min=None, y_max=None,
-                    y2_min=None, y2_max=None):
+                    y2_min=None, y2_max=None, is_plot_saved=False):
     ax1 = data_sample[data_sample.columns[
         data_sample.columns != 'Qoutlet, st. m3/s']].plot(legend=True,
                                                           marker='o',
-                                                          markersize=1.2)
+                                                          markersize=1.2,
+                                                          figsize=(8, 5))
     if y_min is not None and y_max is not None:
         ax1.set_ylim([float(y_min), float(y_max)])
 
@@ -31,5 +32,10 @@ def plot_parameters(data_sample, title='parameters', y_min=None, y_max=None,
 
     ax1.ticklabel_format(axis='y', style='sci', scilimits=(-2, 2))
     ax2.ticklabel_format(axis='y', style='sci', scilimits=(-2, 2))
+
+    if is_plot_saved:
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
+        plt.savefig(title + '.eps', format='eps')
 
     plt.show()

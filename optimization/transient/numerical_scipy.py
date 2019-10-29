@@ -47,7 +47,7 @@ class NumericalScipy:
         s.theta = optimization.x
         s.save_theta()
 
-    def plot(s):
+    def plot(s, is_plot_saved=False):
         s.transient.load_theta_poro()
         s.transient.calculate_consumptions()
 
@@ -59,7 +59,7 @@ class NumericalScipy:
 
         plot_optimized_sample(data_sample, s.theta, s.props,
                               'Numerical Transient State SciPy Optimisation',
-                              theta_type='poro')
+                              theta_type='poro', is_plot_saved=is_plot_saved)
 
     def __str__(s):
         out_str = '\ntheta_ini ' + str(s.theta_ini)
@@ -75,4 +75,4 @@ if __name__ == '__main__':
                                      polynomial_degree=degree,
                                      theta_ini=ini)
     numerical_scipy.calculate()
-    numerical_scipy.plot()
+    numerical_scipy.plot(is_plot_saved=True)

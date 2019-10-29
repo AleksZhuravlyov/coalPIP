@@ -18,10 +18,11 @@ class AnalyticalAnalytical(Model):
         s.save_theta()
         s.calculate_G_rel_err()
 
-    def plot(s):
+    def plot(s, is_plot_saved=False):
         data_sample = s.return_optimized_case()
         plot_optimized_sample(data_sample, s.theta, s.props,
-                              'Analytical Steady State Analytical Optimisation')
+                              'Analytical Steady State Analytical Optimisation',
+                              is_plot_saved=is_plot_saved)
 
 
 if __name__ == '__main__':
@@ -29,4 +30,4 @@ if __name__ == '__main__':
                                                  polynomial_degree=3)
     print(analytical_analytical)
     analytical_analytical.calculate()
-    analytical_analytical.plot()
+    analytical_analytical.plot(is_plot_saved=True)

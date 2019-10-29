@@ -63,7 +63,8 @@ class Parameters:
         data_sample.index.name = 'time, s'
 
     def plot(s, data_sample_type='origin',
-             y_min=None, y_max=None, y2_min=None, y2_max=None):
+             y_min=None, y_max=None, y2_min=None, y2_max=None,
+             is_plot_saved=False):
         if data_sample_type == 'origin':
             if s.origin is None:
                 s.process_origin()
@@ -82,7 +83,7 @@ class Parameters:
             data_sample = s.transient
 
         plot_parameters(data_sample, data_sample_type,
-                        y_min, y_max, y2_min, y2_max)
+                        y_min, y_max, y2_min, y2_max, is_plot_saved)
 
     def __str__(s):
         out_str = super().__str__()
@@ -101,9 +102,8 @@ class Parameters:
 if __name__ == '__main__':
     parameters = Parameters(config_file=sys.argv[1])
     parameters.process_entire()
-    parameters.plot('entire')
+    parameters.plot('entire', is_plot_saved=True)
     parameters.process_steady()
-    parameters.plot('steady')
+    parameters.plot('steady', is_plot_saved=True)
     parameters.process_transient()
-    parameters.plot('transient')
-    print(parameters)
+    parameters.plot('transient', is_plot_saved=True)

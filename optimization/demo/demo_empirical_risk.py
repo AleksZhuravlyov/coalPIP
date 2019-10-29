@@ -32,7 +32,8 @@ from analytical.steady import Model
 
 
 theta_origin = np.array(
-    [1.01981958e-17, -2.96625640e-23, 3.77621746e-29, -1.52247176e-35],
+    [4.155892311521897426e-15, -1.294967296317188997e-20,
+     1.683918917425242538e-26, -6.975107574216326758e-33],
     dtype=float)
 degree = 3
 #
@@ -65,7 +66,7 @@ theta_max = np.where(theta_origin >= 0, theta_origin * (1 + rate_min_max),
 # print('optimization', optimization)
 
 x0_i = 0
-x1_i = 3
+x1_i = 1
 
 axes = list()
 empirical_risk_slice = list()
@@ -93,18 +94,18 @@ empirical_risk_mesh = model.empirical_risk(theta.transpose(transp_mask))
 
 empirical_risk_mesh = np.squeeze(empirical_risk_mesh, axis=empirical_risk_slice)
 
-# fig = plt.figure()
-# ax = plt.axes(projection='3d')
-# ax.plot_surface(plot_mesh[0], plot_mesh[1], empirical_risk_mesh,
-#                 rstride=1, cstride=1, cmap=mpl.cm.RdYlGn, edgecolor='none')
-# ax.set_zlabel('empirical_risk')
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+ax.plot_surface(plot_mesh[0], plot_mesh[1], empirical_risk_mesh,
+                rstride=1, cstride=1, cmap=mpl.cm.RdYlGn, edgecolor='none')
+ax.set_zlabel('empirical_risk')
 
-fig, ax = plt.subplots(1, 1)
-min_max = [theta_min[x0_i], theta_max[x0_i], theta_min[x1_i],
-           theta_max[x1_i]]
-plt.imshow(empirical_risk_mesh, cmap=mpl.cm.RdYlGn, extent=min_max,
-           origin='lower', aspect='auto')
-plt.colorbar()
+# fig, ax = plt.subplots(1, 1)
+# min_max = [theta_min[x0_i], theta_max[x0_i], theta_min[x1_i],
+#            theta_max[x1_i]]
+# plt.imshow(empirical_risk_mesh, cmap=mpl.cm.RdYlGn, extent=min_max,
+#            origin='lower', aspect='auto')
+# plt.colorbar()
 
 fig.suptitle('empirical risk')
 ax.set_xlabel('x' + str(x0_i))

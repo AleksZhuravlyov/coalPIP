@@ -11,11 +11,12 @@ sys.path.append(os.path.join(current_path, '../'))
 
 def plot_optimized_sample(data_sample, theta, props,
                           title='title', theta_type='perm',
-                          y_min=None, y_max=None, y2_min=None, y2_max=None):
+                          y_min=None, y_max=None, y2_min=None, y2_max=None,
+                          is_plot_saved=False):
     dens_a = props.a_dens
     dens_b = props.b_dens
 
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(10, 10))
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(8, 8))
 
     consumptions = ['Qoutlet (fact), st. m3/s', 'Qoutlet (calc), st. m3/s']
     data_sample[consumptions].plot(ax=axes[0],
@@ -24,8 +25,6 @@ def plot_optimized_sample(data_sample, theta, props,
     pressures = ['Pinlet, Pa', 'Poutlet, Pa']
     ax0_2 = data_sample[pressures].plot(ax=axes[0], secondary_y=True,
                                         legend=True, marker='o', markersize=1.2)
-    [t.set_visible(True) for t in axes[0].get_xticklabels()]
-    axes[0].set_xlabel(data_sample.index.name).set_visible(True)
 
     press_min = data_sample['Poutlet, Pa'].min()
     press_max = data_sample['Pinlet, Pa'].max()
@@ -82,5 +81,14 @@ def plot_optimized_sample(data_sample, theta, props,
     diff_text += '\nstd        ' + "{:.2e}".format(data_sample['Gerror'].std())
     diff_box = mpl.offsetbox.AnchoredText(diff_text, loc=6)
     axes[0].add_artist(diff_box)
+
+    axes[0].xaxis.set_tick_params(which='both', labelbottom=True)
+    # plt.setp(axes[0].get_xticklabels(), visible=True)
+    axes[0].set_xlabel(data_sample.index.name).set_visible(True)
+
+    if is_plot_saved:
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
+        plt.savefig(theta_type + '.eps', format='eps')
 
     plt.show()
